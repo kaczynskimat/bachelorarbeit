@@ -1,0 +1,6 @@
+data/
+thesis-kit/
+small_lcl_data/
+jupyter_notebooks/
+.ipynb_checkpoints/
+__pycache__/
