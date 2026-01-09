@@ -1,0 +1,152 @@
+\chapter{Background}
+
+\section{The Smart Meters and IoT Architecture}
+
+Smart meters are digital energy measurement devices that automatically record electricity consumption and transmit these measurements to the utility provider at regular intervals \cite{SmartMetersApplications}. Depending on the deployment and configuration, the reporting interval usually ranges from seconds to hours. This continuous data collection enables detailed monitoring of energy usage. While this data is essential for applications such as demand response and load forecasting \cite{DemandResponseSurvey, DemandResponseBenefits}, it also introduces significant challenges related to data volume, communication overhead, and user privacy \cite{RevealingHouseholdCharacteristicsSM, InferringPersonalInformationFromDRS}.
+
+Smart meters operate within the Internet of Things (IoT) architectures \cite{reviewIoT}. While early implementations often relied on direct device-to-cloud communication, modern systems are increasingly organized as multi-layered architectures consisting of the Edge Layer, the Fog Layer, and the Central Layer \cite{edgecomputing, fogcomputing}. The split into different layers brings its advantages. 
+
+The Edge Layer consists of the smart meters themselves. Those devices are deployed in close proximity to end users and generate raw consumption data. Due to constraints in computational power, memory, and energy consumption, edge devices are typically limited in the complexity of calculcations they can execute \cite{EdgeIntelligenceSmartMeters}.
+% the first page of the paper says that they can perform easy analysis %
+However, performing lightweight preprocessing at the edge offers important advantages. By executing initial tasks such as data filtering or local aggregation, the system can scale effectively. This is particularly critical given that the amount of data produced by smart meters will continue to grow in the upcoming years, potentially exceeding the capacity of conventional cloud computing to handle raw streams \cite{edgecomputing}. Morevoer, it also brings the advantage with respect to privacy, as sensitive data can be transformed before leaving the user's premises, thereby reducing the trust needed in the central entity, which is currently seen as a potential risk \cite{dezent2025, edgecomputing}.  
+
+The Gateway of Fog Layer represents an intermediate layer between the edge devices and the central entity. They work by analyzing the data sent by edge nodes and reducing it significantly by removing unimportant data or performing preprocessing tasks such as filtering, aggregation, or generalization. By reducing the volume of the data transmitted, this layer can decrease communication overhead and address the inherent cloud problems such as "unreliable latency, lack of mobility support and location-awareness" \cite{fogcomputing}, while still retaining more computational resources than individual smart meters.
+
+The Central Entity, often described as a cloud-based system, is responsible for long-term storage, large-scale analysis, and decision-making processes. While centralized processing simplifies system mananegement and enables complex analytics \cite{SmartMetersApplications}, it requires the transmission of raw or minimally processed data, which increases both privacy risks and the level of trust placed in the data collector \cite{InferringPersonalInformationFromDRS}.
+% InferringPersonalInformationFromDRS - says that if CE gets your raw data they can see what you watch, when you sleep, etc.
+% RevealingHouseholdCharacteristicsSM - paper says that it may reveal your socio-economic status
+
+This layered architecture reflects a fundamental trade-off between efficiency, privacy, and system complexity. Moving computation closer to the data source can reduce latency and bandwidth requirements while limiting the exposure of sensitive information. At the same time, it constrains the available computational resources. These trade-offs are central to this thesis, which investigates how the placement of privacy-preserving preprocessing steps within this architecture affects the final privacy-utility balance. 
+
+
+\section{Data Privacy Fundamentals}
+
+The collection of smart meter data raises significant privacy concerns, as energy consumption patterns can reveal sensitive information about individuals and households  \cite{InferringPersonalInformationFromDRS}. In this matter, it is essential to distinguish between explicit identifiers and quasi-identifiers. 
+
+Explicit identifiers are attributes that uniquely identify an individual on their own, such as a name, address, or customer identification number. In the context of smart metering, examples include the physical address of a household or a unique meter identifier. These attributes are typically removed before data is shared or published  \cite{Sweeney_kanon}.
+% So a common practice is for organizations to release and receive person specific data with all explicit identifiers, such as name, address and telephone number, removed on the assumption that anonymity is maintained because the resulting data look anonymous. However, in most of these cases, the remaining data can be used to re-identify individuals by linking or matching the data to other data or by looking at unique characteristics found in the released data.
+% direct identifier or explicit identifier?
+
+Quasi-identifiers are attributes that are not identifying in isolation but can be used to re-identify individuals when combined with other data sources. In smart meter datasets, quasi-identifiers may include timestamps, energy consumption values, and location-related information. Although such attributes appear innocuous, their combination can form distinctive usage patterns that uniquely characterize households \cite{Sweeney_kanon}.
+
+The risk posed by quasi-identifiers is demonstrated by linkage attacks, in which anonymized datasets are combined with external information, often publicly available, from an auxiliary dataset that shares common attributes to re-identify individuals \cite{Sweeney_kanon}. 
+% re-identification by linking paragraph
+% all the information comes from the sweeney_kanon paper, should I cite that 3 times in a row?
+
+A foundational example of this vulnerability is the work of Latanya Sweeney, who demonstrated that 87\% of the U.S. population could be uniquely identified using only a combination of ZIP code, gender, and date of birth \cite{Sweeney_SimpleDemographics}. Sweeney proved the validity of this threat by successfully re-identifying the medical records of the Governor of Massachusetts, linking the "anonymized" hospital data (which contained diagnosis and demographics) with the public Voter Registration List (which contained names and demographics). Similarly, Narayanan and Shmatikov de-anonymized the Netflix Prize dataset \cite{NetflixPaper}. Although the dataset had been stripped of user IDs, the researchers were able to re-identify specific users by linking the timestamped movie ratings in the dataset with public reviews posted on IMDb.
+
+
+
+In the smart meter context, linkage attacks may exploit publicly available information, such as occupancy schedules or appliance usage statistics, to infer private attributes including presence patterns, daily routines, or socio-economic characteristics \cite{RevealingHouseholdCharacteristicsSM}. These risks illustrate that simply removing explicit identifiers is insufficient to guarantee privacy and motivate the use of formal privacy models that provide quantifiable protection against re-identification  \cite{Sweeney_kanon}.
+
+
+\section{Formal Privacy Models}
+
+To mitigate the re-identification risks described in the previous section, several formal privacy models have been developed. These models transition privacy from a heuristic process to a mathematically provable state. This section outlines the foundational model of k-anonymity, the alternative paradigm of Differential Privacy, and the stream-specific derivation known as z-anonymity.
+
+\subsection{K-Anonymity and Equivalence Classes}
+The foundational concept in privacy-preserving data publishing is $k$-anonymity, proposed by Sweeney. Formally, a dataset satisfies k-anonymity if every record is indistinguishable from at least $k-1$ other records with respect to the set of quasi-identifiers \cite{Sweeney_kanon}.
+
+The core mechanism relies on partitioning the dataset into equivalence classes. An equivalence class is a set of records that share identical values for their quasi-identifiers. To achieve a specified threshold k, algorithms employ generalization (reducing granularity, e.g., converting a specific timestamp to a 1-hour interval) or suppression (removing the value entirely) until the cardinality of every equivalence class is $\geq k$ \cite{Sweeney_kanon}.
+
+However, k-anonymity is inherently ill-suited for the IoT data streams described in Section 2.1. Standard algorithms require a global view of a static dataset to calculate optimal generalization hierarchies. In a streaming context, data arrives sequentially and indefinitely \cite{AnonymizationDataStreams}. To form an equivalence class of size k, the gateway would need to buffer incoming tuples until enough matching records arrive. This introduces "blocking," creating significant latency that contradicts the real-time requirements of smart grids \cite{zanonDataStreams}. Furthermore, the computational cost of recalculating equivalence classes as new data arrives is often prohibitive for resource-constrained edge devices \cite{AnonymizationDataStreams}.
+% In data streams scenario, it may be difficult or even impossible to find the real value domain of a numeric attribute since the values of the attribute vary as tuples arrive endlessly. - first citation
+% In a nutshell, in a stream of incoming data, an observation is released if and only if at least z − 1 other users had an observation for the same attribute-value pair in the past ∆t time interval. / The majority of the previous methods, however, works with the concept of sliding window, i.e., the incoming data is accumulated, then processed, and finally released with a certain delay. - second citation
+% The reasons are: (1) Static data anonymization does not require real-time process while it is in urgent need for data streams. It is proved that finding the optimal k-anonymity scheme is NP-hard [21]. Therefore, the existing anonymization methods can be divided into accurate methods [2,3,5,8,10] and approximate methods [4,6,7,9,11]. The accurate methods aim at searching for the optimal solution, but they all require exponential execution time, which is infeasible for data streams. The approximate methods find the approximate solutions in polynomial time but their time complexity is still too high for data streams. - third citation
+
+\subsection{Differential Privacy}
+Differential Privacy (DP) is widely regarded as the "gold standard" in modern privacy research. Unlike k-anonymity, which focuses on the structure of the output data, DP focuses on the algorithm itself. It guarantees that the output of a query is substantially similar whether or not any single individual’s data is included in the input \cite{DifferentialPrivacy}.
+
+
+Mechanically, DP is achieved by injecting calibrated noise (typically via Laplace or Gaussian mechanisms) into the data or query results \cite{DifferentialPrivacy}. While robust against linkage attacks, this noise injection presents a fundamental conflict with the operational requirements of smart metering. As emphasized in \cite{DemandResponseSurvey}, energy data must be reliable and precise to avoid substantial financial costs, with billing meters subject to rigorous accuracy standards (e.g., IEC 61036). Consequently, the probabilistic distortion introduced by DP is often considered unacceptable for raw energy data streams where precise measurements are mandatory.
+
+Furthermore, in a continuous streaming context, the Basic Composition Theorem \cite{DifferentialPrivacy} dictates that privacy loss accumulates with every query ($\sum \epsilon_i$). As established in Section 3.5 of the foundational literature, this cumulative property makes it mathematically impossible to maintain a fixed privacy guarantee over an indefinite period without eventually stopping transmission or introducing infinite noise.
+
+
+%  As missing or erroneous data may determine substantial costs, data must be reliable and accurate.The accuracy requirements of static billing meters are defined in IEC 61036 standards in order to preserve the accuracy of the measurement data. (citation from DemandResponseSurvey)
+
+\subsection{Z-Anonymity}
+To address the latency constraints of k-anonymity while avoiding the noise injection of DP, z-anonymity was proposed as a lightweight, stream-centric alternative. Unlike k-anonymity, which enforces distinct groups of k current records, z-anonymity operates on the principle of historical frequency. It assumes that privacy risks are highest for "outliers"—values that appear rarely in the data stream \cite{zanonDataStreams}.
+% if the count < z, then suppress
+% this way, it avoids publishing tuples with "outliers"
+
+The algorithm processes data in a single pass with O(1) complexity, making it ideal for the Edge and Fog layers. It functions through the following steps, based on the definition in \cite{zanonDataStreams}:
+% The z-anon property can be achieved in real-time with zero delay using a simple algorithm based on efficient data structures.
+%  By assuming that the number of attributes a has the same order of magnitude of the hash structure dimension, collisions are infrequent, and consequently, the total computational cost is O(1) for each incoming observation.
+\begin{enumerate}
+
+
+    \item \textbf{History Maintenance}: The system maintains a sliding window or historical table of observed values for a specific quasi-identifier.
+
+% We propose to generalize the approach presented in our previous work [8]: the attribute-value pairs are stored as a hash table H, with linked lists to manage collisions.
+
+    \item \textbf{Lookup}: For every incoming data tuple, the algorithm queries the historical count of that attribute value.
+
+% We work on a data stream, in which we continuously receive observations that associate users with a value of an attribute. We define an observation as (t,u,a), which indicates that, at time t, the user u exposes an attribute-value pair a.
+
+
+    \item \textbf{Threshold Check}: If the count exceeds the threshold z, the value is deemed "safe" (common enough to not be identifying) and is transmitted immediately.
+
+    \item \textbf{Suppression}: If the count is below z, the value is considered a rare outlier and is suppressed or generalized.
+
+% In other words, the attributes that are associated with less than z users in the past ∆t shall be obfuscated, i.e., removed or replaced with an empty identifier. The goal is to prevent rare values of attributes to be published, thus reducing the possibilities of an attacker to re-identify a user through unusual attributes.
+
+\end{enumerate}
+
+
+This approach eliminates the need for buffering, allowing for zero-delay transmission \cite{zanonDataStreams}. Crucially, z-anonymity is probabilistically linked to k-anonymity. The authors demonstrate that if a value appears z times in a sufficiently large historical window, the probability that the record belongs to a crowd of size k approaches 1. Therefore, z-anonymity acts as a performant proxy for k-anonymity in high-velocity environments, balancing privacy protection with the strict low-latency requirements of IoT architectures \cite{zanonDataStreams}.
+
+% IV. MODELING z-ANONYMITY AND k-ANONYMITY (probabilistic approach)
+
+
+\section{Data Preprocessing Techniques for Privacy}
+
+While formal privacy models like k- or z-anonymity provide the criteria for protection, preprocessing techniques are the mechanisms used to transform raw data to meet these criteria. In the context of IoT architectures, these transformations are crucial for striking a balance between privacy (indistinguishability), utility (analytical precision), and system performance (bandwidth and latency). This section formally defines the three primary preprocessing steps investigated in this thesis: Data Generalization, Temporal Aggregation, and Local Prefiltering.
+
+\subsection{Data Generalization}
+Data generalization is a non-perturbative technique that replaces specific, precise values with broader, less specific categories or intervals. The fundamental goal is to increase the probability that a specific tuple belongs to a larger equivalence class (or meets the z-threshold) by reducing the granularity of the data.
+Formally, generalization relies on a Value Generalization Hierarchy (VGH). A VGH is a tree structure where leaf nodes represent raw values (e.g., 1.234 kWh) and root nodes represent the most general state (e.g., "Any Energy Value"). In between are intermediate levels of granularity \cite{DataGeneralizationPaper}.
+% page 2 of the data generalization paper
+
+There are two primary approaches to defining these hierarchies:
+
+\begin{enumerate}
+    
+    \item\textbf{Static Generalization (Fixed-Intervals)}: The domain of an attribute is divided into pre-defined intervals (e.g., 0-5 kWh, 5-10 kWh) or precision levels (e.g., rounding to the nearest integer). For categorical attributes, such as ZIP codes, this typically involves masking the least significant digits (e.g., replacing the last digit with *) \cite{Sweeney_kanon}. This method is computationally lightweight (O(1)) and deterministic, making it highly suitable for the resource-constrained Edge layer of IoT devices \cite{edgecomputing}.
+
+    \item\textbf{Dynamic Binning}: As noted in literature, static intervals typically rely on rigid hierarchies that may fail to capture the actual data distribution, resulting in unnecessary information loss. To address this, dynamic partitioning techniques such as Mondrian \cite{DynamicBinningMondrian} were proposed to adapt the intervals based on the local density of the data. While dynamic binning often yields higher utility—measured, for instance, by the Normalized Certainty Penalty (NCP) defined in \cite{UtilityBasedAnonymizationNCP}, it typically requires sorting or multiple passes over the data, which introduces computational overhead that may not be viable for real-time edge processing.
+% mondrian figure 4
+% mondrian figure 12 - it reduced the error
+% UBA proposes NCP
+
+\end{enumerate}
+
+For this thesis, generalization is modeled through precision reduction (rounding). This acts as a static VGH where moving up the hierarchy corresponds to reducing the number of decimal places, effectively grouping precise sensor readings into discrete "bins" to facilitate indistinguishability.
+
+\subsection{Temporal Aggregation}
+Temporal aggregation serves as a dimensionality reduction technique along the time axis. In high-frequency smart metering (e.g., reading every second), the timestamp itself acts as a quasi-identifier that can reveal minute-by-minute lifestyle patterns \cite{InferringPersonalInformationFromDRS}.
+
+
+This technique replaces a sequence of fine-grained data points $d_1, d_2, \dots, d_n$ occurring within a time window W with a single aggregate value $V_\text{agg}$ (typically the mean, sum, or max).
+The windowing strategy determines how data is grouped:
+
+\begin{enumerate}
+    \item\textbf{Tumbling Windows}: These are fixed, non-overlapping windows (e.g., 10:00–10:15, 10:15–10:30). In this approach, every data point contributes to exactly one aggregate value.
+
+
+    \item\textbf{Sliding Windows}: These are overlapping intervals (e.g., 10:00–10:15, 10:05–10:20), where a single data point contributes to multiple aggregate values.
+
+\end{enumerate}
+
+In this research, tumbling windows are employed to calculate average energy consumption. This approach significantly reduces the data volume transmitted to the central entity while retaining the coarse-grained load profile necessary for forecasting applications \cite{DemandResponseSurvey}.
+
+\subsection{Local Prefiltering (Suppression)}
+Suppression is the most drastic form of data protection, where specific attribute values are entirely removed from the dataset \cite{Sweeney_kanon}. In a centralized architecture, suppression typically occurs after the data has reached the central server (global suppression). However, Local Prefiltering shifts this decision to the Gateway or Edge layer  \cite{dezent2025}.
+
+This technique operates on a rule-based logic to identify "outliers" locally. In the context of z-anonymity, an outlier is a value that appears with insufficient frequency to be safe \cite{zanonDataStreams}. By implementing a local threshold ($z_{\text{local}}$), the Gateway can assess the rarity of a value before transmission.
+
+\textbf{Rule}: If Frequency(value)<$z_{\text{local}}$, the value is suppressed locally.
+
+\textbf{Effect}: This prevents the transmission of data that is statistically likely to fail the global privacy check at the Central Entity anyway.
+
+While prefiltering significantly reduces Communication Overhead (message count), it introduces a risk to Data Utility (Publication Ratio). If the local view of the data at the Gateway does not perfectly reflect the global distribution at the Central Entity, the Gateway might suppress a value that—had it been sent—would have found matches from other Gateways. Investigating this trade-off between bandwidth savings and false-positive suppression is a key objective of this study.
