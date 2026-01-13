@@ -11,9 +11,11 @@ class TemporalAggregationExperiment:
         self.all_frequencies = {}
         self.results = []
         self.z_values = range(1, max_z_to_test + 1)
+        self.bandwidth_savings = 0 # 75 means 75% reduction in # of messages sent in comparison to baseline 
 
     def _aggregate_the_data(self, time_window='2H'):
-
+        
+        original_tuples = len(self.df)
         self.df['DateTime'] = pd.to_datetime(self.df['DateTime'])
 
         self.df = self.df.set_index('DateTime')
@@ -26,6 +28,12 @@ class TemporalAggregationExperiment:
                         .round(3)) # round to 3 decimal places
         
         self.df.dropna(inplace=True)
+        aggregated_tuples = len(self.df)
+
+        self.bandwidth_savings = 1 - (aggregated_tuples / original_tuples)
+        self.bandwidth_savings *= 100 # Convert to percentage
+        self.bandwidth_savings = round(self.bandwidth_savings, 2)
+        
 
         print(self.df.tail())
 

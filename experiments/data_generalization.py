@@ -14,7 +14,7 @@ class GeneralizationExperiment:
         self.all_frequencies = {}
         self.results = []
         self.z_values = range(1, max_z_to_test + 1)
-        if precision != 3:
+        if precision != 3: # data precision is 3 decimal places
             self._round_the_column(precision)
 
     def head(self, n=5):
