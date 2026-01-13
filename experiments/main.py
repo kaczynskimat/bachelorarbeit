@@ -11,31 +11,36 @@ def main():
     # experiment.show_graphs()
 
     # local prefiltering with generalization
-    experiment2 = LocalPrefilteringWithGeneralization(data)
-    experiment2.round_energy_consumption()
-    print("Energy consumption rounded")
-    experiment2.split_data_to_gateways()
-    experiment2.perform_local_prefiltering()
-    print("local prefiltering done")
-    experiment2.global_z_anonymity()
-    experiment2.draw_graphs()
+    # experiment2 = LocalPrefilteringWithGeneralization(data)
+    # experiment2.round_energy_consumption()
+    # print("Energy consumption rounded")
+    # experiment2.split_data_to_gateways()
+    # experiment2.perform_local_prefiltering()
+    # print("local prefiltering done")
+    # experiment2.global_z_anonymity()
+    # experiment2.draw_graphs()
 
     # generalization experiment
     # experiment3 = GeneralizationExperiment(data, precision=3)
     # experiment3.prepare_data()
     # experiment3.draw_graphs()
+    # prec_los = experiment3.calculate_ncp()
+    # print(prec_los)
     # experiment4 = GeneralizationExperiment(data, precision=2)
     # experiment4.prepare_data()
     # experiment4.draw_graphs()
+    # prec_los = experiment4.calculate_ncp()
+    # print(prec_los)
     # experiment5 = GeneralizationExperiment(data, precision=1)
     # experiment5.prepare_data()
     # experiment5.draw_graphs()
+    # prec_los = experiment5.calculate_ncp()
+    # print(prec_los)
 
     # temporal aggregation experiment
-    # experiment6 = TemporalAggregationExperiment(data)
-    # experiment6.aggregate_the_data()
-    # experiment6.prepare_data()
-    # experiment6.draw_graphs()
+    experiment6 = TemporalAggregationExperiment(data)
+    experiment6.prepare_data()
+    experiment6.draw_graphs()
 
     
 

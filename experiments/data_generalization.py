@@ -73,3 +73,11 @@ class GeneralizationExperiment:
         plt.title("Publication Ratio")
         plt.grid(True)
         plt.show()
+
+    def calculate_ncp(self):
+        min_value = self.df['KWH/hh (per half hour) '].min()
+        max_value = self.df['KWH/hh (per half hour) '].max()
+
+        precision = 10**(-self.precision)/(max_value - min_value)
+        precisionloss_in_procent = precision * 100
+        return round(precisionloss_in_procent, 2)

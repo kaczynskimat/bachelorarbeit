@@ -12,7 +12,7 @@ class TemporalAggregationExperiment:
         self.results = []
         self.z_values = range(1, max_z_to_test + 1)
 
-    def aggregate_the_data(self, time_window='2H'):
+    def _aggregate_the_data(self, time_window='2H'):
 
         self.df['DateTime'] = pd.to_datetime(self.df['DateTime'])
 
@@ -56,6 +56,7 @@ class TemporalAggregationExperiment:
 
 
     def prepare_data(self):
+        self._aggregate_the_data()
         self._group_by_datetime()
         self.perform_z_anon()
     
@@ -79,5 +80,8 @@ class TemporalAggregationExperiment:
         plt.title("Publication Ratio for Temporal Aggregation Experiment")
         plt.grid(True)
         plt.show()
+
+    def bandwith_savings(self):
+        no_rows = len(self.df)
 
     
