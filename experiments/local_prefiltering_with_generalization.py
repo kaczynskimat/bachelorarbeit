@@ -19,7 +19,7 @@ class LocalPrefilteringWithGeneralization:
         self.results = []
         self.z_values = range(1, max_z_to_test + 1)
         self.gws = [] # a list of GWs with corresponding data
-        self.local_z = 2 # change that to the range of z's to test 
+        self.local_z = local_z # change that to the range of z's to test 
         self.global_freq_map = []
         self.global_counters = defaultdict(Counter)
     
@@ -29,6 +29,14 @@ class LocalPrefilteringWithGeneralization:
         
     def head(self, n=5):
         return self.df.head(n)
+    
+    def _calculate_ncp(self):
+        min_value = self.df['KWH/hh (per half hour) '].min()
+        max_value = self.df['KWH/hh (per half hour) '].max()
+
+        precision = 10**(-self.precision)/(max_value - min_value)
+        precisionloss_in_procent = precision * 100
+        return round(precisionloss_in_procent, 2)
     
     def split_data_to_gateways(self):
         """
@@ -57,12 +65,12 @@ class LocalPrefilteringWithGeneralization:
         
         return freq_map
     
-    def perform_local_prefiltering(self, local_z=2):
+    def perform_local_prefiltering(self):
         for df in self.gws:
             freq_map = self._build_frequency_map(df)
             new_freq_map = {
                 timestamp: Counter({
-                    key: max(0, count - (local_z - 1))
+                    key: max(0, count - (self.local_z - 1))
                     for key, count in inner_counter.items()
                 })
                 for timestamp, inner_counter in freq_map.items() # outer loop, dictionary comprehension

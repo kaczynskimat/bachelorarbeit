@@ -6,9 +6,9 @@ def main():
     data = 'output.csv'
 
     # baseline experiment
-    # experiment = BaselineExperiment(data)
-    # experiment.prepare_data()
-    # experiment.show_graphs()
+    experiment = BaselineExperiment(data)
+    experiment.prepare_data()
+    experiment.show_graphs()
 
     # local prefiltering with generalization
     # experiment2 = LocalPrefilteringWithGeneralization(data)
@@ -23,6 +23,8 @@ def main():
     # generalization experiment
     # experiment3 = GeneralizationExperiment(data, precision=3)
     # experiment3.prepare_data()
+    # results = experiment3.get_results()
+    # print(results)
     # experiment3.draw_graphs()
     # prec_los = experiment3.calculate_ncp()
     # print(prec_los)
@@ -38,9 +40,9 @@ def main():
     # print(prec_los)
 
     # temporal aggregation experiment
-    experiment6 = TemporalAggregationExperiment(data)
-    experiment6.prepare_data()
-    experiment6.draw_graphs()
+    # experiment6 = TemporalAggregationExperiment(data)
+    # experiment6.prepare_data()
+    # experiment6.draw_graphs()
 
     
 

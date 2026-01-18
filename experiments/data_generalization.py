@@ -45,9 +45,17 @@ class GeneralizationExperiment:
 
             publication_ratio = (total_published_for_this_z / total_tuples) * 100
                 
-                
-            self.results.append({'z': z, 'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio})
+            suppressed_count = total_tuples - total_published_for_this_z
 
+            self.results.append({
+                'z': z, 
+                'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio,
+                'suppressed_tuples': suppressed_count,
+                'ncp': 0.0,
+                'bandwidth_savings': 0.0,
+                'precision': 'Raw',
+                'window': None
+            })
 
     def prepare_data(self):
         self._group_by_datetime()
@@ -81,3 +89,11 @@ class GeneralizationExperiment:
         precision = 10**(-self.precision)/(max_value - min_value)
         precisionloss_in_procent = precision * 100
         return round(precisionloss_in_procent, 2)
+    
+
+    def get_results(self):
+        ncp = self.calculate_ncp() 
+        for row in self.results:
+            row['ncp'] = ncp 
+            row['precision'] = self.precision
+        return self.results
