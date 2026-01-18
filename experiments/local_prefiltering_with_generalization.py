@@ -4,7 +4,7 @@ from collections import Counter, defaultdict
 
 class LocalPrefilteringWithGeneralization:
 
-    def __init__(self, data, max_z_to_test=500, generalization_precision=2, local_z = 2):
+    def __init__(self, data, max_z_to_test=100, generalization_precision=2, local_z = 2):
         """
         Initializes the data from a CSV file and creates a DataFrame.
         Data will be tested for z values from 1 to 500.
@@ -65,7 +65,7 @@ class LocalPrefilteringWithGeneralization:
         
         return freq_map
     
-    def perform_local_prefiltering(self):
+    def perform_local_prefiltering(self): 
         for df in self.gws:
             freq_map = self._build_frequency_map(df)
             new_freq_map = {
@@ -92,10 +92,16 @@ class LocalPrefilteringWithGeneralization:
         total_tuples = len(self.df)
         total_forwarded_by_gateway = sum(counter.total() for counter in self.global_counters.values())
 
-        max_z_to_test = 100
-        z_values = range(1, max_z_to_test + 1)
+        bandwidth_savings = 0
+        if total_tuples > 0:
+            bandwidth_savings = (1 - (total_forwarded_by_gateway/total_tuples))*100
         
-        for z in z_values:
+        ncp = self._calculate_ncp()
+        label = f"Local Z={self.local_z}"
+
+        
+        
+        for z in self.z_values:
             total_published_for_this_z = 0
             for timestamp in self.global_counters:
                 for _, count in self.global_counters[timestamp].most_common():
@@ -109,8 +115,20 @@ class LocalPrefilteringWithGeneralization:
 
             publication_ratio = (total_published_for_this_z / total_tuples) * 100
 
-            self.results.append({'z': z, 'published_tuples': total_published_for_this_z, 'publication_ratio_relative_to_gw': publication_ratio_relative_to_gw,
-                        'publication_ratio': publication_ratio})
+            suppressed_count = total_tuples - total_published_for_this_z
+
+            self.results.append({
+                'z': z, 
+                'published_tuples': total_published_for_this_z, 
+                'publication_ratio_relative_to_gw': publication_ratio_relative_to_gw,
+                'publication_ratio': publication_ratio,
+                'suppressed_tuples': suppressed_count,
+                'ncp': ncp,
+                'bandwidth_savings': bandwidth_savings,
+                'local_precision': label,
+                'precision': self.precision,
+                'window': None
+            })
 
         # print(self.results)
 
