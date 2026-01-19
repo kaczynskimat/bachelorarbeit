@@ -38,8 +38,16 @@ class BaselineExperiment:
 
             publication_ratio = (total_published_for_this_z / total_tuples) * 100
                 
-                
-            self.results.append({'z': z, 'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio})
+            suppressed_count = total_tuples - total_published_for_this_z
+            self.results.append({
+                'z': z, 
+                'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio,
+                'suppressed_tuples': suppressed_count,
+                'ncp': 0.0,
+                'bandwidth_savings': 0.0,
+                'precision': 'Raw Data',
+                'window': None
+            })
 
 
     def prepare_data(self):
