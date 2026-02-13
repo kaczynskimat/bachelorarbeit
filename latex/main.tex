@@ -1,0 +1,102 @@
+% \documentclass[12pt,a4paper]{report}
+
+% \usepackage[utf8]{inputenc}
+% \usepackage[T1]{fontenc}
+% \usepackage[margin=2.5cm]{geometry}
+
+% \usepackage{setspace}
+% \usepackage{amsmath}
+% \usepackage{comment}
+% \onehalfspacing
+
+% \usepackage{clrscode}
+% \usepackage{xcolor}
+% \usepackage[pdftex]{graphicx}
+% \usepackage{xurl}
+% \usepackage{titlesec}
+
+% \newcommand{\documenttitle}{Analysis of Preprocessing Steps for z-Anonymity in IoT Architectures}
+
+% \titleformat{\chapter}
+%   {\normalfont\huge\bfseries}
+%   {\thechapter}
+%   {1em}
+%   {}
+
+% \begin{document}
+
+% \title{\documenttitle}
+% \author{Mateusz Kaczynski\\
+% TU Dresden\\
+% \texttt{mateusz.kaczynski@mailbox.tu-dresden.de}}
+% \maketitle
+
+% \input{chapters/00_abstract}
+% \input{chapters/01_introduction}
+% \input{chapters/02_background}
+% \input{chapters/03_related_work}
+% \input{chapters/04_methodology}
+% \input{chapters/05_results}
+% % \input{chapters/06_discussion}
+% % \input{chapters/07_conclusion}
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}
+
+% \end{document}
+
+
+\documentclass[12pt,a4paper]{report}
+\usepackage{float}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.5cm]{geometry}
+
+\usepackage[printonlyused]{acronym}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{comment}
+\onehalfspacing
+
+\usepackage{clrscode}
+\usepackage{xcolor}
+\usepackage[pdftex]{graphicx}
+\usepackage{xurl}
+\usepackage{titlesec}
+
+\newcommand{\documenttitle}{Analysis of Preprocessing Steps for z-Anonymity in IoT Architectures}
+
+\titleformat{\chapter}
+  {\normalfont\huge\bfseries}
+  {\thechapter}
+  {1em}
+  {}
+
+\begin{document}
+
+\title{\documenttitle}
+\author{Mateusz Kaczynski\\
+TU Dresden\\
+\texttt{mateusz.kaczynski@mailbox.tu-dresden.de}}
+\maketitle
+
+% \begin{abstract}
+\input{chapters/00_abstract}
+\tableofcontents
+\newpage
+% \end{abstract}
+\input{chapters/00_acronyms}
+\input{chapters/01_introduction}
+\input{chapters/02_background}
+\input{chapters/03_related_work}
+\input{chapters/04_methodology}
+\input{chapters/05_results}
+% \input{chapters/06_discussion}
+% \input{chapters/07_conclusion}
+
+% \nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

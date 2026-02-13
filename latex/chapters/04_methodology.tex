@@ -7,7 +7,7 @@ Due to the computational volume of the full dataset, a representative time windo
 The selected subset contains 1,854,193 tuples. It includes readings from 5,529 unique households. Although the project lists 5,567 total participants, the discrepancy of 38 individuals is attributed to missing reports or device downtime during this specific week. As this represents less than 0.7\% of the data population, it does not statistically impact the validity of the privacy analysis.
 
 \subsection{Preprocessing and Schema}
-Raw data contained tariff information (such as the stdorToU column indicating Standard or Dynamic Time-of-Use tariffs). As the focus of this research is on the privacy of consumption values rather than billing mechanisms, these metadata columns were removed during preprocessing.
+Raw data contained tariff information (such as the stdorToU column indicating Standard or Dynamic Time-of-Use tariffs). As the focus of this research is on the privacy of consumption values rather than billing mechanisms, this column was removed during preprocessing.
 The final data schema used for the experiments is defined as a tuple T=⟨ID,t,v⟩, where:
 \begin{itemize}
 \item \textbf{ID (LCLid):} A unique anonymized identifier for the smart meter (household).
@@ -18,10 +18,11 @@ Prior to the experiments, the dataset was checked for missing values. No null en
 
 
 \section{System Model and IoT Architecture}
-To evaluate the impact of preprocessing on privacy, we model a hierarchical IoT architecture consisting of three distinct layers: the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This model simulates the flow of energy consumption data from the household to the utility provider.
+To evaluate the impact of preprocessing on privacy, we model a hierarchical \ac{IoT} architecture consisting of three distinct layers: the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This model simulates the flow of energy consumption data from the household to the utility provider.
 
 
 The Fog layer functions as an intermediate tier between the household and the utility provider. To simulate this topology, the total user population (N=5,529) is partitioned into 56 logical neighborhoods, with each subset reporting to a simulated Fog node (gateway). The role of this layer varies depending on the experimental scenario. In most cases, the gateways serve as passive relays, facilitating the transmission of data to the Central Entity. However, in the \textit{Local Prefiltering} scenario, the gateways act as active processing points. In this specific configuration, each gateway executes a local privacy check to suppress unique values within its neighborhood, thereby reducing the volume of unique outliers transmitted upstream.
+% I am not sure if I should explain that here as well, since I'm explaining that in the 'Layer 2: The Fog (Gateways)' section.
 
 \subsection{Layer 1: The Edge (Smart Meters)}
 The Edge layer forms the foundation of the architecture, serving as the primary data source. In this simulation, each unique household identifier (LCLid) functions as an independent Edge Node. Primarily responsible for generating timestamped energy readings, these nodes are modeled as resource-constrained devices. However, in scenarios involving distributed preprocessing, we assume the Edge possesses sufficient computational capability to perform lightweight scalar transformations. Specifically, in the \textit{Data Generalization}, \textit{Temporal Aggregation}, and \textit{Local Prefiltering} experiments, the Edge node performs the initial data transformation, rounding values to a specific precision or computing temporal averages, before transmission.
@@ -36,7 +37,7 @@ The role of this layer varies depending on the experimental scenario. In the bas
 
 \subsection{Layer 3: The Central Entity (Cloud)}
 The Central Entity represents the utility provider's backend infrastructure and serves as the final destination for all data streams. Its primary function is to collect incoming tuples from lower layers to construct a global snapshot of the energy grid at any given timestamp t.
-Within this privacy framework, the Central Entity is designated as the executor of the Global Snapshot z-Anonymity algorithm. It aggregates frequencies across the entire population and suppresses any tuple failing the condition $Count(v) \ge z$.. From a security perspective, this entity is modeled as "honest-but-curious": while it is trusted to follow the protocol correctly, it is simultaneously the adversary from whom individual raw values must be concealed.
+Within this privacy framework, the Central Entity is designated as the executor of the Global Snapshot z-Anonymity algorithm. It aggregates frequencies across the entire population and suppresses any tuple failing the condition $Count(v) \ge z$. From a security perspective, this entity is modeled as "honest-but-curious": while it is trusted to follow the protocol correctly, it is simultaneously the adversary from whom individual raw values must be concealed.
 
 
 
@@ -54,7 +55,8 @@ Let $P_t$ be the set of all tuples received by the Central Entity at timestamp $
 \end{equation}
 where $Count(v, P_t)$ represents the number of households reporting the exact value $v$ at time $t$. 
 
-However, to ensure that the release of data does not inadvertently reveal individual information through count variations, this implementation employs a \textbf{surplus publication mechanism}. If the threshold is met, the number of tuples actually published for value $v$, denoted as $N_{pub}(v, t)$, is calculated as:
+
+Based on the privacy guarantees defined by Jha et al. \cite{zanonDataStreams}, this implementation represents the z-anonymity requirement using a surplus publication mechanism. In a snapshot context, this ensures that the first $z-1$ occurrences of a value are treated as a privacy buffer. If the threshold is met, the number of tuples actually published for value $v$, denoted as $N_{pub}(v, t)$, is calculated as:
 \begin{equation}
     N_{pub}(v, t) = Count(v, P_t) - (z - 1)
 \end{equation}
@@ -96,12 +98,12 @@ The implementation utilizes the Pandas \texttt{resample} function to apply non-o
 
 The simulation evaluates window sizes of $W \in \{1H, 2H, 4H\}$, corresponding to $n \in \{2, 4, 8\}$ readings per transmission. This preprocessing step has a dual impact on the dataset:
 \begin{enumerate}
-    \item \textbf{Data Volume:} It directly reduces the total row count of the transmitted dataset by a factor of $n$. This leads to significant \textit{Bandwidth Savings} (as defined in Section 4.5), which is a critical performance objective in resource-constrained IoT environments.
+    \item \textbf{Data Volume:} It directly reduces the total row count of the transmitted dataset by a factor of $n$. This leads to significant \textit{Bandwidth Savings} (as defined in Section 4.5), which is a critical performance objective in resource-constrained \ac{IoT} environments.
     \item \textbf{Value Transformation:} The process of averaging values over a time window aims to reduce the distinctness of usage peaks, theoretically making individual profiles less unique and more similar to the broader population. This research investigates whether this smoothing increases the publication ratio by making users appear more similar, or if the generation of new, high-precision arithmetic means actually increases the sparsity of the dataset, thereby harming data availability.
 
 \end{enumerate}
 
-Unlike the Generalization scenario, which only reduces the precision of a single reading, Temporal Aggregation fundamentally alters the temporal resolution of the data, masking fine-grained behavioral patterns while providing a significant performance boost for the IoT architecture.
+Unlike the Generalization scenario, which only reduces the precision of a single reading, Temporal Aggregation fundamentally alters the temporal resolution of the data, masking fine-grained behavioral patterns while providing a significant performance boost for the \ac{IoT} architecture.
 
 
 

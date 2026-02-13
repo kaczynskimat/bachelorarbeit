@@ -1,6 +1,6 @@
 \chapter{Related work}
 
-This chapter contextualizes the research within the broader field of privacy-preserving technologies for IoT. It reviews existing stream-specific anonymization algorithms, analyzes architectural approaches to distributed privacy, and identifies the research gap regarding the placement of preprocessing steps in multi-layered architectures.
+This chapter contextualizes the research within the broader field of privacy-preserving technologies for \ac{IoT}. It reviews existing stream-specific anonymization algorithms, analyzes architectural approaches to distributed privacy, and identifies the research gap regarding the placement of preprocessing steps in multi-layered architectures.
 
 \section{Privacy-Preserving Algorithms for Data Streams}
 While standard k-anonymity is the foundational model for privacy~\cite{Sweeney_kanon}, its application to data streams is non-trivial. As noted in recent literature, finding an optimal k-anonymity scheme is NP-hard~\cite{meyerson2004complexity}, and heuristic approximations typically require multiple scans of the dataset to minimize information loss. In a streaming context, where data is potentially infinite and high-velocity, such multi-pass algorithms introduce unacceptable latency and buffering requirements~\cite{AnonymizationDataStreams}.
@@ -28,7 +28,7 @@ In contrast, z-anonymity, the algorithm central to this thesis, offers a differe
 
 \section{Architectural Solutions for Privacy in IoT}
 
-As detailed in the background regarding IoT architectures, modern smart grid systems have evolved from cloud-centric models to multi-layered Edge/Fog topologies. This architectural shift has profound implications for privacy implementation. Conventional smart metering approaches rely on a centralized "Trusted Third Party" model, where the utility provider collects raw high-frequency data before applying any anonymization measures. However, this creates a single point of failure and a significant privacy risk, as highlighted by Lisovich et al., who demonstrated that detailed household activities can be inferred from such centralized raw streams~\cite{InferringPersonalInformationFromDRS}.
+As detailed in the background regarding \ac{IoT} architectures, modern smart grid systems have evolved from cloud-centric models to multi-layered Edge/Fog topologies. This architectural shift has profound implications for privacy implementation. Conventional smart metering approaches rely on a centralized "Trusted Third Party" model, where the utility provider collects raw high-frequency data before applying any anonymization measures. However, this creates a single point of failure and a significant privacy risk, as highlighted by Lisovich et al., who demonstrated that detailed household activities can be inferred from such centralized raw streams~\cite{InferringPersonalInformationFromDRS}.
 
 To mitigate this trust requirement, recent paradigms advocate for Distributed Privacy, where anonymization occurs before data leaves the user's control.
 
@@ -43,6 +43,7 @@ These approaches demonstrate a clear trend in the literature: shifting the "priv
 
 To evaluate the effectiveness of the proposed architectures, it is necessary to quantify the cost paid to achieve privacy. In privacy-preserving data publishing, this is typically measured in terms of Information Loss (General Utility) and Task-Specific Utility.
 
+% \subsection{Information Loss Metrics (General Utility)}
 Information loss metrics quantify how much the data has been distorted or generalized relative to the raw input. These metrics are independent of the specific application (e.g., billing or forecasting) and provide a general measure of data precision.
 
 \textbf{Discernibility Metric (DM):} In static data contexts, the Discernibility Metric~\cite{DiscernibilityMetric} is a standard measure of information loss. It assigns a penalty to each tuple based on the size of the equivalence class to which it belongs; larger classes imply higher indistinguishability and thus higher information loss~\cite{DataAnonymizationEvaluationMetrics}. However, by definition, DM calculates information loss solely based on group size, meaning it does not account for the magnitude of the generalization range. It assigns the same penalty to a compact cluster as it does to a widely dispersed one, provided they contain the same number of tuples.
@@ -50,7 +51,6 @@ Information loss metrics quantify how much the data has been distorted or genera
 \textbf{Normalized Certainty Penalty (NCP):} For streaming and numerical contexts where preserving the precision of values is critical, the Normalized Certainty Penalty (NCP) is preferred~\cite{UtilityBasedAnonymizationNCP}. Unlike DM, NCP quantifies the precision lost by measuring the width of the generalization interval relative to the total domain range. This makes it particularly suitable for smart meter data, where the "spread" of the aggregated values directly impacts the granularity of the reading.
 
 \section{Summary and Research Gap}
-The literature review highlights that while privacy-preserving algorithms for data streams (such as $z$-anonymity) and distributed IoT architectures (Edge/Fog) are well-established individually, there remains a gap in understanding their integration.
+The literature review highlights that while privacy-preserving algorithms for data streams (such as $z$-anonymity) and distributed \ac{IoT} architectures (Edge/Fog) are well-established individually, there remains a gap in understanding their integration.
 
 Most existing studies focus on optimizing the algorithms themselves (e.g., reducing the complexity of clustering) or designing secure  architectures. However, there is a lack of systematic analysis regarding the placement of specific preprocessing steps, such as prefiltering, generalization, or temporal aggregation, within a multi-layered architecture. Specifically, the trade-off between the privacy gained and the system utility lost when shifting these tasks from the Cloud to the Edge or Fog layers has not been comprehensively evaluated in the context of high-frequency smart metering. This thesis addresses this gap by experimentally evaluating these preprocessing strategies to determine the optimal architectural configuration.
-
