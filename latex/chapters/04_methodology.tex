@@ -1,0 +1,161 @@
+\chapter{Methodology}
+
+\section{Dataset and Preprocessing}
+The experimental evaluation in this thesis utilizes the "SmartMeter Energy Consumption Data in London Households" dataset, provided by UK Power Networks as part of the Low Carbon London project \cite{londonSmartMeter2014}. The original dataset covers the period from November 2011 to February 2014 and contains approximately 167 million records from 5,567 representative households in the Greater London area.
+\subsection{Data Selection}
+Due to the computational volume of the full dataset, a representative time window was selected for the simulations. The experiments utilize a one-week period from November 5, 2012 (00:00:00) to November 11, 2012 (23:30:00). This subset allows for the analysis of both weekday and weekend consumption patterns while maintaining a manageable data volume for iterative testing.
+The selected subset contains 1,854,193 tuples. It includes readings from 5,529 unique households. Although the project lists 5,567 total participants, the discrepancy of 38 individuals is attributed to missing reports or device downtime during this specific week. As this represents less than 0.7\% of the data population, it does not statistically impact the validity of the privacy analysis.
+
+\subsection{Preprocessing and Schema}
+Raw data contained tariff information (such as the stdorToU column indicating Standard or Dynamic Time-of-Use tariffs). As the focus of this research is on the privacy of consumption values rather than billing mechanisms, these metadata columns were removed during preprocessing.
+The final data schema used for the experiments is defined as a tuple T=⟨ID,t,v⟩, where:
+\begin{itemize}
+\item \textbf{ID (LCLid):} A unique anonymized identifier for the smart meter (household).
+\item \textbf{t (DateTime):} The timestamp of the reading (30-minute granularity).
+\item \textbf{v (KWH/hh):} The energy consumption value in kilowatt-hours per half hour.
+\end{itemize}
+Prior to the experiments, the dataset was checked for missing values. No null entries were found in the selected one-week subset; therefore, no data cleaning regarding missing values was required, and the full sample of 1,854,193 tuples was used for the simulations.
+
+
+\section{System Model and IoT Architecture}
+To evaluate the impact of preprocessing on privacy, we model a hierarchical IoT architecture consisting of three distinct layers: the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This model simulates the flow of energy consumption data from the household to the utility provider.
+
+
+The Fog layer functions as an intermediate tier between the household and the utility provider. To simulate this topology, the total user population (N=5,529) is partitioned into 56 logical neighborhoods, with each subset reporting to a simulated Fog node (gateway). The role of this layer varies depending on the experimental scenario. In most cases, the gateways serve as passive relays, facilitating the transmission of data to the Central Entity. However, in the \textit{Local Prefiltering} scenario, the gateways act as active processing points. In this specific configuration, each gateway executes a local privacy check to suppress unique values within its neighborhood, thereby reducing the volume of unique outliers transmitted upstream.
+
+\subsection{Layer 1: The Edge (Smart Meters)}
+The Edge layer forms the foundation of the architecture, serving as the primary data source. In this simulation, each unique household identifier (LCLid) functions as an independent Edge Node. Primarily responsible for generating timestamped energy readings, these nodes are modeled as resource-constrained devices. However, in scenarios involving distributed preprocessing, we assume the Edge possesses sufficient computational capability to perform lightweight scalar transformations. Specifically, in the \textit{Data Generalization}, \textit{Temporal Aggregation}, and \textit{Local Prefiltering} experiments, the Edge node performs the initial data transformation, rounding values to a specific precision or computing temporal averages, before transmission.
+Crucially, the Edge defines the system's Trust Boundary. It is the only fully trusted zone in the architecture; data residing on the device is considered private, but once it crosses the network interface, it is treated as exposed unless anonymized.
+
+
+\subsection{Layer 2: The Fog (Gateways)}
+Situated between the household and the utility provider, the Fog layer functions as an intermediate aggregation point. To simulate this topology, the total user population (N=5,529) is partitioned into 56 logical neighborhoods, with each subset reporting to a simulated Gateway.
+
+The role of this layer varies depending on the experimental scenario. In the baseline and purely edge-based experiments, the gateways serve as passive relays. However, in the \textit{Local Prefiltering} scenario, the Fog layer acts as an active privacy enforcer. In this hybrid configuration, the Gateway receives already generalized (rounded) data from its local Edge nodes and executes a local z-anonymity check. It suppresses any values that appear fewer than $z_{local}$ times within that specific neighborhood, ensuring that only locally frequent values are forwarded to the Central Entity.
+
+
+\subsection{Layer 3: The Central Entity (Cloud)}
+The Central Entity represents the utility provider's backend infrastructure and serves as the final destination for all data streams. Its primary function is to collect incoming tuples from lower layers to construct a global snapshot of the energy grid at any given timestamp t.
+Within this privacy framework, the Central Entity is designated as the executor of the Global Snapshot z-Anonymity algorithm. It aggregates frequencies across the entire population and suppresses any tuple failing the condition $Count(v) \ge z$.. From a security perspective, this entity is modeled as "honest-but-curious": while it is trusted to follow the protocol correctly, it is simultaneously the adversary from whom individual raw values must be concealed.
+
+
+
+\section{The Privacy Model: Snapshot z-Anonymity}
+The core privacy mechanism employed in this research is an adaptation of the z-anonymity algorithm proposed by Jha et al. \cite{zanonDataStreams}.
+\subsection{Adaptation for Synchronous Streams}
+The original algorithm utilizes a sliding time window ($\Delta$t) to accumulate frequency counts from sporadic data streams. However, smart metering infrastructure operates in a synchronous manner, in which the entire population of devices reports consumption data at aligned intervals (e.g., every 30 minutes).
+To address this, this thesis implements a Spatial (or Snapshot) z-Anonymity model. Instead of maintaining a historical buffer for individual users, the algorithm evaluates the privacy of a tuple based on the frequency of its value across the entire reporting population at a specific timestamp t.
+
+
+\subsection{Formal Definition}
+Let $P_t$ be the set of all tuples received by the Central Entity at timestamp $t$. A consumption value $v$ is eligible for publication if and only if it satisfies the $z$-anonymity threshold:
+\begin{equation}
+    Count(v, P_t) \geq z
+\end{equation}
+where $Count(v, P_t)$ represents the number of households reporting the exact value $v$ at time $t$. 
+
+However, to ensure that the release of data does not inadvertently reveal individual information through count variations, this implementation employs a \textbf{surplus publication mechanism}. If the threshold is met, the number of tuples actually published for value $v$, denoted as $N_{pub}(v, t)$, is calculated as:
+\begin{equation}
+    N_{pub}(v, t) = Count(v, P_t) - (z - 1)
+\end{equation}
+If $Count(v, P_t) < z$, then $N_{pub}(v, t) = 0$. This logic ensures that even in the presence of an adversary with partial knowledge of $z-1$ individuals, the published data represents a "crowd" where no single individual's contribution can be definitively isolated.
+
+
+\section{Implementation of Experimental Scenarios}
+
+To verify the hypotheses, the simulation framework was developed using the \textbf{Python 3.13} programming language. The implementation leverages the scientific Python ecosystem to handle the large volume of smart meter data efficiently. Specifically, the \textbf{Pandas} library is utilized for high-performance data manipulation, employing vectorized operations to process the 1.8 million tuples without the performance overhead of iterative loops. Visualization of the resulting data distributions and metrics is handled by \textbf{Matplotlib} and \textbf{Seaborn}.
+
+The codebase follows a modular object-oriented design pattern to ensure reproducibility. Rather than a monolithic script, each experimental scenario is encapsulated in a distinct, standalone Python class. While these classes do not share a common inheritance parent, they adhere to a standardized structural contract, implementing identical methods for data loading, processing, and metric calculation. This design ensures that all strategies are evaluated against the same criteria and produce a standardized dictionary of results. The simulations are orchestrated by a central runner script (\texttt{main.py}), which iterates through the parameter ranges and consolidates the outputs into a single CSV file for comparative analysis.
+
+\subsection{Scenario A: Baseline (Cloud-Only)}
+The first scenario serves as the control group, representing the traditional centralized "trusted third party" model. In this configuration, no preprocessing or data transformation occurs at either the Edge (Smart Meter) or the Fog (Gateway) layers. Implemented in the \texttt{BaselineExperiment} class, this simulation models Smart Meters transmitting raw, high-precision energy readings (three decimal places) directly upon generation. The intermediate Gateways at the Fog layer perform no filtering or local analysis, acting strictly as passive relays that forward the complete data stream to the Central Entity. Consequently, the global $z$-anonymity algorithm is executed entirely at the Cloud layer. This scenario establishes the benchmark metrics for publication ratio and bandwidth consumption. By identifying how much data is suppressed when raw, high-entropy values from the entire population are subjected to strict anonymity constraints, it provides a "worst-case" reference point against which the effectiveness of distributed preprocessing is measured.
+
+
+
+\subsection{Scenario B: Data Generalization (Edge)}
+In the second scenario, the privacy-preserving workload is shifted to the Edge layer, simulating a model where the Smart Meter sanitizes data before transmission. The primary objective is to increase the probability of satisfying the $z$-anonymity threshold by reducing the granularity of the consumption values. When the raw readings are less precise, the likelihood of multiple users reporting identical values at the same timestamp increases, thereby reducing data suppression.
+
+This logic is implemented in the \texttt{GeneralizationExperiment} class. Before the privacy check, a scalar rounding transformation is applied to every energy reading $v$. To ensure that the data is mapped to its mathematically nearest representative value, the implementation uses the standard round-half-up formula:
+
+\begin{equation}
+    v' = \frac{\lfloor v \cdot 10^p + 0.5 \rfloor}{10^p}
+\end{equation}
+
+In this equation, $p$ represents the target precision level (the number of decimal places). The inclusion of the $+0.5$ offset within the floor function $\lfloor \dots \rfloor$ is a deliberate architectural choice to perform rounding rather than simple truncation. Without this offset, the data would always be rounded down, leading to a significant systematic bias and higher information loss. By rounding to the nearest neighbor, the algorithm minimizes the error introduced during generalization, preserving as much utility as possible for the utility provider.
+
+The simulation systematically evaluates three levels of generalization ($p \in \{0, 1, 2\}$) and compares them against the raw dataset resolution ($p=3$). For $p=0$, values are rounded to the nearest integer (e.g., $0.158$ kWh becomes $0.0$ kWh), whereas $p=2$ retains a higher degree of granularity. The resulting quantization error and its impact on data utility are further analyzed using both the standard Normalized Certainty Penalty (NCP) and the refined Effective NCP metric, both of which are described in detail in Section 4.5.
+
+\subsection{Scenario C: Temporal Aggregation (Edge)}
+The third scenario evaluates the impact of reducing the temporal granularity of the data stream. Implemented in the \texttt{TemporalAggregationExperiment} class, this strategy simulates an Edge node that buffers multiple readings and transmits a single representative average over a fixed time window $W$. This approach contrasts with the baseline 30-minute reporting interval and is specifically designed to evaluate the trade-off between real-time monitoring and network efficiency.
+
+The implementation utilizes the Pandas \texttt{resample} function to apply non-overlapping "tumbling" windows. For a set of $n$ readings $\{v_1, v_2, \dots, v_n\}$ captured within a window $W$, the Edge node calculates and transmits the arithmetic mean $\bar{v}$:
+
+\begin{equation}
+    \bar{v} = \frac{1}{n} \sum_{i=1}^{n} v_i
+\end{equation}
+
+The simulation evaluates window sizes of $W \in \{1H, 2H, 4H\}$, corresponding to $n \in \{2, 4, 8\}$ readings per transmission. This preprocessing step has a dual impact on the dataset:
+\begin{enumerate}
+    \item \textbf{Data Volume:} It directly reduces the total row count of the transmitted dataset by a factor of $n$. This leads to significant \textit{Bandwidth Savings} (as defined in Section 4.5), which is a critical performance objective in resource-constrained IoT environments.
+    \item \textbf{Value Transformation:} The process of averaging values over a time window aims to reduce the distinctness of usage peaks, theoretically making individual profiles less unique and more similar to the broader population. This research investigates whether this smoothing increases the publication ratio by making users appear more similar, or if the generation of new, high-precision arithmetic means actually increases the sparsity of the dataset, thereby harming data availability.
+
+\end{enumerate}
+
+Unlike the Generalization scenario, which only reduces the precision of a single reading, Temporal Aggregation fundamentally alters the temporal resolution of the data, masking fine-grained behavioral patterns while providing a significant performance boost for the IoT architecture.
+
+
+
+\subsection{Scenario D: Local Prefiltering (Fog)}
+The final scenario evaluates a distributed privacy-preserving architecture that leverages the intermediate Fog layer. This logic is implemented in the \texttt{LocalPrefilteringWithGeneralization} class and represents a multi-stage hybrid approach to data protection.
+
+
+
+To simulate a realistic network topology, the user population ($N=5,529$) is logically partitioned into 56 neighborhoods. To ensure statistical consistency across the majority of the simulation, 55 of these neighborhoods are modeled as standard clusters of 100 households each. The final neighborhood consists of the remaining 29 households. This configuration allows the research to evaluate the preprocessing strategies across a near-uniform distribution while maintaining the integrity of the full real-world dataset. The processing pipeline consists of three distinct stages:
+
+
+\begin{enumerate}
+    \item \textbf{Edge Level Generalization:} Prior to transmission to the gateway, each Smart Meter rounds its energy reading $v$ to a fixed precision of $p=2$ decimal places. This initial transformation is necessary to ensure that enough identical values exist within a small local neighborhood to satisfy a privacy threshold.
+    \item \textbf{Fog Level Prefiltering:} Each Gateway executes a local $z$-anonymity check on the generalized data received from its neighborhood. Following the surplus publication model, the Gateway identifies the frequency of each value $v$ within its local subset $U_i$. A tuple is forwarded to the Central Entity only if it satisfies $Count(v, U_i) \geq z_{local}$. The number of tuples forwarded for a given value, $N_{fwd}$, is calculated as:
+    \begin{equation}
+        N_{fwd}(v, U_i) = \max(0, Count(v, U_i) - (z_{local} - 1))
+    \end{equation}
+    \item \textbf{Global Anonymity Check:} The Central Entity collects the surplus tuples from all gateways and performs the final global $z$-anonymity check (as defined in Section 4.3) before the data is considered fully anonymized and ready for publication.
+\end{enumerate}
+
+This scenario evaluates the hypothesis that performing a preliminary privacy check at the Fog layer can significantly reduce the volume of "unique outliers" transmitted over the core network. By suppressing rare values close to the source, the architecture aims to maximize \textit{Bandwidth Savings} while maintaining high global data availability for the Central Entity.
+
+
+\section{Evaluation Metrics}
+To quantify the trade-offs among privacy, utility, and performance across different architectural scenarios, three primary metrics are used.
+
+\subsection{Publication Ratio}
+The Publication Ratio ($PR$) measures the availability of data after the $z$-anonymity constraints have been applied. It is defined as the percentage of tuples that satisfy the privacy threshold and are released to the end-user or application:
+\begin{equation}
+    PR = \frac{N_{published}}{N_{total}} \times 100\%
+\end{equation}
+where $N_{published}$ is the count of tuples satisfying $Count(v, P_t) \geq z$, and $N_{total}$ is the total number of tuples in the original dataset.
+
+\subsection{Bandwidth Savings}
+To evaluate the performance benefits of the Fog and Edge layers, we measure the reduction in data transmission volume. Bandwidth Savings ($BS$) is calculated as the percentage of messages suppressed or aggregated before reaching the Central Entity:
+\begin{equation}
+    BS = \left( 1 - \frac{N_{transmitted}}{N_{total}} \right) \times 100\%
+\end{equation}
+In the baseline, $BS$ is $0\%$, whereas in temporal aggregation and local prefiltering, this value represents the network load reduction.
+
+\subsection{Information Loss and Effective NCP}
+Information loss is measured using the Normalized Certainty Penalty (NCP). The standard NCP normalizes the width of a generalization interval $[L, U]$ against the global range of the attribute:
+\begin{equation}
+    NCP_{std} = \frac{U - L}{max(v) - min(v)} \times 100\%
+\end{equation}
+
+
+However, smart meter data is characterized by high skewness and extreme outliers. To prevent these rare high-consumption values from artificially inflating the denominator and "diluting" the perceived information loss, this research introduces a refined \textbf{Effective NCP ($NCP_{eff}$)}. This metric evaluates utility loss relative to the range of the typical population. The "Effective Range" is determined through a robust statistical process:
+\begin{enumerate}
+    \item The median consumption $\tilde{v}$ of the dataset is calculated.
+    \item For every reading $v_i$, the absolute deviation from the median is computed: $|v_i - \tilde{v}|$.
+    \item A cutoff distance $D$ is identified as the 95th percentile of these deviations.
+    \item The dataset is filtered to include only the 95\% of observations where $|v_i - \tilde{v}| \leq D$.
+\end{enumerate}
+The $NCP_{eff}$ uses the range of this filtered subset as the denominator. This ensures that the metric accurately reflects the impact of rounding on the vast majority of households, providing a more rigorous assessment of data utility than the standard global normalization.
+
+

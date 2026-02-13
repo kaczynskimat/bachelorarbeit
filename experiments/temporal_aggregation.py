@@ -20,7 +20,7 @@ class TemporalAggregationExperiment:
         self.bandwidth_savings = round(self.bandwidth_savings, 2)
 
 
-    def _aggregate_the_data(self, time_window='2H'):
+    def _aggregate_the_data(self, time_window='2h'):
         
         original_tuples = len(self.df)
         self.df['DateTime'] = pd.to_datetime(self.df['DateTime'])
@@ -52,10 +52,6 @@ class TemporalAggregationExperiment:
                 for count in self.all_frequencies[timestamp].values():
                     if count >= z:
                         total_published_for_this_z += (count - (z-1))
-            
-            if total_published_for_this_z == 0 and z > 50: # Optimization to stop early
-                print(f"No tuples published for z >= {z}. Stopping evaluation.")
-                break
 
             publication_ratio = (total_published_for_this_z / total_tuples) * 100
             
@@ -66,37 +62,15 @@ class TemporalAggregationExperiment:
                 'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio,
                 'suppressed_tuples': suppressed_count,
                 'ncp': 0.0,
-                'bandwidth_savings': 0.0,
+                'bandwidth_savings': self.bandwidth_savings,
                 'precision': "Precision 3", # 3 is a constant here because of the rounding after aggregation 
                 'window': self.window_size
             })
 
 
-    def prepare_data(self, window_size='2H'):
+    def prepare_data(self, window_size='2h'):
         self.window_size = window_size
         self._aggregate_the_data(window_size) # default window size is 2h
         self._group_by_datetime()
         self.perform_z_anon()
-    
-    def draw_graphs(self):
-        results_df = pd.DataFrame(self.results)
-        print("\nSample of results:")
-        print(results_df.head())
-        print("\nResult for z=50:")
-        print(results_df[results_df['z'] == 50])
 
-        plt.plot(results_df['z'], results_df['published_tuples'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("Published Tuples")
-        plt.title("Number of published tuples for Temporal Aggregation Experiment")
-        plt.grid(True)
-        plt.show()
-
-        plt.plot(results_df['z'], results_df['publication_ratio'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("% of tuples published")
-        plt.title("Publication Ratio for Temporal Aggregation Experiment")
-        plt.grid(True)
-        plt.show()
-
-    

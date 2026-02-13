@@ -1,0 +1,56 @@
+\chapter{Related work}
+
+This chapter contextualizes the research within the broader field of privacy-preserving technologies for IoT. It reviews existing stream-specific anonymization algorithms, analyzes architectural approaches to distributed privacy, and identifies the research gap regarding the placement of preprocessing steps in multi-layered architectures.
+
+\section{Privacy-Preserving Algorithms for Data Streams}
+While standard k-anonymity is the foundational model for privacy~\cite{Sweeney_kanon}, its application to data streams is non-trivial. As noted in recent literature, finding an optimal k-anonymity scheme is NP-hard~\cite{meyerson2004complexity}, and heuristic approximations typically require multiple scans of the dataset to minimize information loss. In a streaming context, where data is potentially infinite and high-velocity, such multi-pass algorithms introduce unacceptable latency and buffering requirements~\cite{AnonymizationDataStreams}.
+% meyerson citation - motivation and results
+% anonymizationdatastreams - 'In order to reduce the information loss caused by generalization and suppression, the raw data is often accessed repeatedly during the anonymization of static data. Although mul tiple scans are permissible for static data, they are unacceptable for data streams...'
+
+
+
+To address these constraints, researchers have developed stream-centric algorithms that typically rely on micro-aggregation or clustering.
+
+% A prominent example is CASTLE (Continuously Anonymizing STreaming data via adaptive cLustEring). CASTLE treats anonymization as a continuous clustering process. Incoming tuples are held in a buffer until they can be grouped into clusters of size k. While effective, CASTLE introduces a mandatory delay constraint (delta); tuples are only released once the cluster is formed or the delay expires \cite{CASTLE}.
+
+CASTLE (Continuously Anonymizing STreaming data via adaptive cLustEring) is a stream-centric anonymization approach that models tuples as points in a similarity space defined by quasi-identifier attributes. Incoming tuples are incrementally clustered and released using a common generalization, supporting both numerical and categorical attributes. To ensure timely data publication, CASTLE enforces a delay constraint $\delta$, which bounds the maximum time between a tuple’s arrival and its anonymized release~\cite{CASTLE}.
+
+% The basic idea of the proposed approach is to exploit quasi-identifier attributes to define a metric space: tuples are modeled as points in this space. CASTLE groups incoming tuples into clusters and releases all tuples belonging to the same cluster with the same generalization. CASTLE supports the anonymization of both numerical and categorical attributes, by generalizing the latter through domain generalization hierarchies, and the first through intervals. Clustering of tuples is further constrained by the need to have fresh anonymized data. To cope with this requirement, CASTLE ensures that the delay between a tuple’s input and its output is at most equal to a given parameter . We refer to this constraint as delay constraint.
+
+
+Subsequent improvements, such as FADS (Fast Anonymization of Data Streams)~\cite{AnonymizationDataStreams} or FAANST~\cite{FAANST}, attempt to optimize this process by maintaining dynamic or fixed groups 
+% or using grid-based indexing 
+to reduce computational overhead. These algorithms adhere to the strict principle that data streams should be scanned only once. However, despite their computational efficiency, they still fundamentally rely on buffering incoming data to form valid 
+k-groups. This requirement inherently introduces variable latency, as the release of a tuple is blocked until sufficient tuples arrive, a critical drawback for real-time monitoring applications.
+
+In contrast, z-anonymity, the algorithm central to this thesis, offers a different paradigm. Instead of clustering current records (which requires waiting for the arrival of similar tuples), it uses historical statistical frequency. By checking if a value has appeared z times in the past, it enables a zero-delay decision process with O(1) complexity~\cite{zanonDataStreams}. This makes it distinct from the clustering-based family (CASTLE/FADS) and particularly suitable for low-latency smart metering.
+
+
+\section{Architectural Solutions for Privacy in IoT}
+
+As detailed in the background regarding IoT architectures, modern smart grid systems have evolved from cloud-centric models to multi-layered Edge/Fog topologies. This architectural shift has profound implications for privacy implementation. Conventional smart metering approaches rely on a centralized "Trusted Third Party" model, where the utility provider collects raw high-frequency data before applying any anonymization measures. However, this creates a single point of failure and a significant privacy risk, as highlighted by Lisovich et al., who demonstrated that detailed household activities can be inferred from such centralized raw streams~\cite{InferringPersonalInformationFromDRS}.
+
+To mitigate this trust requirement, recent paradigms advocate for Distributed Privacy, where anonymization occurs before data leaves the user's control.
+
+Approaches at the Edge layer leverage the local processing power of smart meters to sanitize data at the source. By performing tasks such as noise addition or local suppression directly on the device, these systems ensure that no raw data ever traverses the network~\cite{edgecomputing}. However, implementing complex privacy protocols on end devices is non-trivial. As noted by Zhou et al., the resource constraints of current smart meter hardware, specifically limited memory% and energy budgets
+, often restrict the complexity of the algorithms that can be executed locally~\cite{EdgeIntelligenceSmartMeters}.
+
+Intermediate gateways (Fog nodes) offer a compromise, possessing significantly more computational power than individual meters while remaining geographically closer to the user than the cloud~\cite{fogcomputing}. Several distributed privacy systems rely on this layer to balance performance and security. For instance, the deZent model~\cite{dezent2025} utilizes gateways to coordinate data aggregation horizontally. This allows the system to identify and suppress rare values locally without a central entity seeing the raw inputs. Similarly, distributed $k$-anonymity protocols \cite{DistrKAnon} use encryption across distributed nodes to compute global privacy parameters without revealing raw data.
+
+These approaches demonstrate a clear trend in the literature: shifting the "privacy workload" from the Cloud to the Edge and Fog enhances security by minimizing data exposure, though it introduces new challenges regarding distributed coordination and resource management.
+
+\section{Evaluation Metrics}
+
+To evaluate the effectiveness of the proposed architectures, it is necessary to quantify the cost paid to achieve privacy. In privacy-preserving data publishing, this is typically measured in terms of Information Loss (General Utility) and Task-Specific Utility.
+
+Information loss metrics quantify how much the data has been distorted or generalized relative to the raw input. These metrics are independent of the specific application (e.g., billing or forecasting) and provide a general measure of data precision.
+
+\textbf{Discernibility Metric (DM):} In static data contexts, the Discernibility Metric~\cite{DiscernibilityMetric} is a standard measure of information loss. It assigns a penalty to each tuple based on the size of the equivalence class to which it belongs; larger classes imply higher indistinguishability and thus higher information loss~\cite{DataAnonymizationEvaluationMetrics}. However, by definition, DM calculates information loss solely based on group size, meaning it does not account for the magnitude of the generalization range. It assigns the same penalty to a compact cluster as it does to a widely dispersed one, provided they contain the same number of tuples.
+
+\textbf{Normalized Certainty Penalty (NCP):} For streaming and numerical contexts where preserving the precision of values is critical, the Normalized Certainty Penalty (NCP) is preferred~\cite{UtilityBasedAnonymizationNCP}. Unlike DM, NCP quantifies the precision lost by measuring the width of the generalization interval relative to the total domain range. This makes it particularly suitable for smart meter data, where the "spread" of the aggregated values directly impacts the granularity of the reading.
+
+\section{Summary and Research Gap}
+The literature review highlights that while privacy-preserving algorithms for data streams (such as $z$-anonymity) and distributed IoT architectures (Edge/Fog) are well-established individually, there remains a gap in understanding their integration.
+
+Most existing studies focus on optimizing the algorithms themselves (e.g., reducing the complexity of clustering) or designing secure  architectures. However, there is a lack of systematic analysis regarding the placement of specific preprocessing steps, such as prefiltering, generalization, or temporal aggregation, within a multi-layered architecture. Specifically, the trade-off between the privacy gained and the system utility lost when shifting these tasks from the Cloud to the Edge or Fog layers has not been comprehensively evaluated in the context of high-frequency smart metering. This thesis addresses this gap by experimentally evaluating these preprocessing strategies to determine the optimal architectural configuration.
+

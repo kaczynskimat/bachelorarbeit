@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 class GeneralizationExperiment:
 
     # data = 'output.csv'
-    def __init__(self, data, precision=3, max_z_to_test=500):
+    def __init__(self, data, precision=3, max_z_to_test=100):
         self.df = pd.read_csv(data, index_col=False)
         if 'stdorToU' in self.df.columns:
             self.df.drop(columns=['stdorToU'], axis=1, inplace=True)
@@ -14,6 +14,8 @@ class GeneralizationExperiment:
         self.all_frequencies = {}
         self.results = []
         self.z_values = range(1, max_z_to_test + 1)
+        self.min_value = self.df['KWH/hh (per half hour) '].min()
+        self.max_value = self.df['KWH/hh (per half hour) '].max() 
         if precision != 3: # data precision is 3 decimal places
             self._round_the_column(precision)
 
@@ -31,6 +33,7 @@ class GeneralizationExperiment:
 
     def perform_z_anon(self):
         total_tuples = len(self.df)
+        ncp = self._calculate_ncp()
         for z in self.z_values:
             total_published_for_this_z = 0
             for timestamp in self.all_frequencies:
@@ -38,22 +41,23 @@ class GeneralizationExperiment:
                 for count in self.all_frequencies[timestamp].values():
                     if count >= z:
                         total_published_for_this_z += (count - (z-1))
-            
-            if total_published_for_this_z == 0 and z > 50: # Optimization to stop early
-                print(f"No tuples published for z >= {z}. Stopping evaluation.")
-                break
 
             publication_ratio = (total_published_for_this_z / total_tuples) * 100
                 
             suppressed_count = total_tuples - total_published_for_this_z
 
+            if self.precision == 3:
+                label = "Raw Data"
+            else:
+                label = f"Precision {self.precision}"
+
             self.results.append({
                 'z': z, 
                 'published_tuples': total_published_for_this_z, 'publication_ratio': publication_ratio,
                 'suppressed_tuples': suppressed_count,
-                'ncp': 0.0,
+                'ncp': ncp,
                 'bandwidth_savings': 0.0,
-                'precision': 'Raw',
+                'precision': label,
                 'window': None
             })
 
@@ -61,39 +65,10 @@ class GeneralizationExperiment:
         self._group_by_datetime()
         self.perform_z_anon()
 
-    def draw_graphs(self):
-        results_df = pd.DataFrame(self.results)
-        print("\nSample of results:")
-        print(results_df.head())
-        print("\nResult for z=50:")
-        print(results_df[results_df['z'] == 50])
 
-        plt.plot(results_df['z'], results_df['published_tuples'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("Published Tuples")
-        plt.title("Published Tuples for Data Generalization Experiment")
-        plt.grid(True)
-        plt.show()
-
-        plt.plot(results_df['z'], results_df['publication_ratio'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("% of tuples published")
-        plt.title("Publication Ratio")
-        plt.grid(True)
-        plt.show()
-
-    def calculate_ncp(self):
-        min_value = self.df['KWH/hh (per half hour) '].min()
-        max_value = self.df['KWH/hh (per half hour) '].max()
-
+    def _calculate_ncp(self):
+        min_value = self.min_value
+        max_value = self.max_value
         precision = 10**(-self.precision)/(max_value - min_value)
         precisionloss_in_procent = precision * 100
         return round(precisionloss_in_procent, 2)
-    
-
-    def get_results(self):
-        ncp = self.calculate_ncp() 
-        for row in self.results:
-            row['ncp'] = ncp 
-            row['precision'] = self.precision
-        return self.results

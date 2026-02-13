@@ -1,0 +1,63 @@
+\chapter{Results}
+
+This chapter presents the experimental results of the proposed preprocessing strategies. The primary objective is to quantify the trade-off between privacy (Publication Ratio), data utility (NCP/Precision), and system performance (Bandwidth Savings) across the four architectural scenarios.
+
+\section{Analysis of Input Data Distribution}
+Before evaluating the privacy algorithms, it is essential to characterize the underlying distribution of the energy consumption data. The performance of $z$-anonymity is directly dependent on the frequency of duplicate values within a snapshot. Therefore, identifying where the "crowd" of users resides is critical for understanding the baseline suppression rates.
+
+Figure \ref{fig:dist_full} illustrates the distribution of energy readings for the selected week on a logarithmic scale. The data exhibits a heavy right-skewed distribution. While the dataset contains extreme outliers reaching up to 9.26 kWh, these represent a statistically small portion of the total observations.
+
+\begin{figure}[H] % [H] forces it to stay here
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/distribution_full_log.png}
+    \caption{Distribution of raw energy consumption (Log Scale).}
+    \label{fig:dist_full}
+\end{figure}
+
+
+To better understand the behavior of the majority of the population, Figure \ref{fig:dist_zoomed} provides a focused view of the 0.0 to 1.0 kWh range. This interval is highly significant as it contains approximately 96.5\% of all recorded tuples. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/distribution_zoomed_to_1kwh.png}
+    \caption{Detailed view of the 0-1.0 kWh range, where 96.5\% of the population data resides.}
+    \label{fig:dist_zoomed}
+\end{figure}
+
+The distribution reveals two primary characteristics:
+\begin{enumerate}
+    \item \textbf{Low-Load Concentration:} A significant majority of readings are clustered between 0.05 kWh and 0.2 kWh. In this range, the high density of users suggests a higher probability of satisfying $z$-anonymity thresholds.
+    \item \textbf{High-Precision Sparsity:} Despite the concentration of users in the low-load range, the readings are recorded with three-decimal-point precision. Consequently, even small variations (e.g., 0.101 vs. 0.102 kWh) result in tuples being treated as unique values. Beyond the 0.5 kWh mark, the frequency of any specific raw value drops to near zero, indicating that most active usage records are mathematically unique within a 30-minute snapshot.
+\end{enumerate}
+
+
+
+
+\textbf{Note}: I will update this section later with additional graphs showing daily usage patterns and the frequency of unique measurements at different times of the day. 
+
+
+\clearpage % images finished before starting the next section 
+
+
+\section{Baseline Performance (Cloud-Only)}
+The Baseline scenario represents the centralized approach where raw data is transmitted directly to the Cloud before the privacy check is applied. This serves as the control group for the experiments.
+
+Figure \ref{fig:baseline} depicts the Publication Ratio as a function of the privacy threshold $z$. The results indicate a rapid degradation of data availability as the privacy requirement increases.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/results_baseline.png}
+    \caption{Baseline Performance: Publication Ratio vs. $z$.}
+    \label{fig:baseline}
+\end{figure}
+
+Consistent with the sparsity observed in the data distribution analysis, the system struggles to maintain availability:
+\begin{itemize}
+    \item \textbf{At $z=2$:} The system publishes 83.6\% of the tuples.
+    \item \textbf{At $z=10$:} The publication ratio drops to approximately 35.7\%.
+    \item \textbf{At $z=50$:} The publication ratio falls below 0.4\%.
+\end{itemize}
+
+% This confirms that the "Cloud-Only" approach using raw data is non-viable for privacy-preserving smart metering, as the probability of $z$ users having the exact same raw float value at the same timestamp is statistically negligible.
+
+Given the total population of 5,529 households, finding at least two matching consumption readings at a single timestamp is statistically probable, especially within the low-load ranges identified in Section 5.1. This explains the relatively high data availability at z=2. However, as the threshold increases toward z=50, the probability of finding such a large number of matching users in a single snapshot becomes nearly zero. The data resolution is too fine for such a dense crowd to form by coincidence, leading to the near-total suppression of the dataset.

@@ -45,7 +45,7 @@ class LocalPrefilteringWithGeneralization:
         """
         lclids = sorted(self.df['LCLid'].unique())
         groups = [lclids[i:i+100] for i in range(0, len(lclids), 100)]
-        print(len(groups))
+        # print(len(groups))
         # it splits the data into gateway groups
         for n in range(len(groups)):
             # select rows for macs that in groups[n]
@@ -130,35 +130,4 @@ class LocalPrefilteringWithGeneralization:
                 'window': None
             })
 
-        # print(self.results)
 
-    def draw_graphs(self):
-        results_df = pd.DataFrame(self.results)
-        print("\nSample of results:")
-        print(results_df.head())
-        print("\nResult for z=10:")
-        print(results_df[results_df['z'] == 10])
-
-
-        plt.plot(results_df['z'], results_df['published_tuples'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("Published Tuples")
-        plt.title(f"Number of published tuples for local prefiltering experiment (at CE level) with local z = {self.local_z}")
-        plt.grid(True)
-        plt.show()
-
-        plt.plot(results_df['z'], results_df['publication_ratio'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("% of tuples published")
-        plt.title("Publication Ratio")
-        plt.grid(True)
-        plt.show()
-
-        plt.plot(results_df['z'], results_df['publication_ratio_relative_to_gw'])
-        plt.xlabel("z-anonymity threshold")
-        plt.ylabel("Published Tuples")
-        plt.title("Publication Ratio in % (Relative to # of tuples released at GW)")
-        plt.grid(True)
-        plt.show()
-            
-        print(self.results)
