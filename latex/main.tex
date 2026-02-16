@@ -65,6 +65,29 @@
 \usepackage{xurl}
 \usepackage{titlesec}
 
+
+
+\usepackage[
+    backend=biber,   
+    style=ieee,      
+    doi=true,        
+    isbn=false,
+    url=false,       
+    eprint=false     
+]{biblatex}
+
+\addbibresource{references.bib} 
+\AtEveryBibitem{
+  \clearfield{pages}
+  \clearfield{number}
+  \clearfield{month}  
+  \clearfield{note}       
+  \clearfield{publisher}  
+  \clearfield{location}   
+  \clearfield{series}     
+  \clearfield{isbn}
+  \clearfield{issn}
+}
 \newcommand{\documenttitle}{Analysis of Preprocessing Steps for z-Anonymity in IoT Architectures}
 
 \titleformat{\chapter}
@@ -95,8 +118,8 @@ TU Dresden\\
 % \input{chapters/06_discussion}
 % \input{chapters/07_conclusion}
 
-% \nocite{*}
-\bibliographystyle{IEEEtran}
-\bibliography{references}
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}
+\printbibliography
 
 \end{document}
