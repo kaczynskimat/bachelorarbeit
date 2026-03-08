@@ -1,0 +1,51 @@
+\chapter{System Model}
+This chapter describes the technical setup and the privacy model used in this thesis. It first defines the three-layer \ac{IoT} architecture and the trust model. Finally, it explains how the $z$-anonymity algorithm is adjusted to work with synchronous data snapshots.
+
+\section{Architectural Model}
+\label{sec:system_model}
+Building on the architectural foundations discussed in Section~\ref{sec:architecturalfoundations}, the experimental environment is implemented as a three-tier hierarchical simulation consisting of the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This setup models the data flow from the individual household level to a centralized utility provider, allowing for the systematic placement of preprocessing steps at different logical layers.
+
+The simulation utilizes 5,529 independent Edge nodes, each representing a unique smart meter identified by its \texttt{LCLid}. These nodes are logically partitioned into 56 distinct neighborhoods to represent a distributed network topology. To maintain a near-uniform distribution across the simulation, 55 of these neighborhoods consist of exactly 100 smart meters, while the final neighborhood manages the remaining 29 devices. Each neighborhood reports to an intermediate Fog node (Gateway), which serves as an active processing point in Local Prefiltering scenario or a passive relay in all other cases. The final destination for all processed streams is the Central Entity (Cloud), which performs the snapshot $z$-anonymity of all data received from gateways.
+
+For the purposes of this research, we adopt an \textbf{idealized device-level trust model}. In this framework, both the Edge nodes (Smart Meters) and the Fog nodes (Gateways) are assumed to be secure and trusted hardware environments. This assumption is based on the premise that these devices are produced by external vendors according to industry security standards and operate within the local infrastructure of the power grid or the user's premises.
+
+
+Under this idealized setting, we assume that the data is protected from unauthorized access while residing on or being processed by the local hardware. Consequently, the \textit{Trust Boundary} is located at the egress point of the Fog layer. Data is treated as exposed to an "honest-but-curious" adversary only once it leaves the local network and enters the Central Entity's infrastructure. This model allows the thesis to focus on the effectiveness of preprocessing steps, such as rounding at the Edge or prefiltering at the Fog, in protecting user privacy against the central data collector, assuming the underlying local \ac{IoT} hardware remains uncompromised.
+
+
+
+\section{The Privacy Model: Snapshot z-Anonymity}
+\label{sec:zanonsnapshot}
+The core privacy mechanism employed in this research is an adaptation of the z-anonymity algorithm proposed by Jha et al. \cite{zanonDataStreams}.
+
+\subsection{Adaptation for Synchronous Streams}
+
+The original algorithm utilizes a sliding time window ($\Delta t$) to accumulate frequency counts from sporadic data streams. However, smart metering infrastructure operates in a synchronous manner, in which the entire population of devices reports consumption data at aligned intervals (e.g., every 30 minutes). To address this, this thesis implements a \textbf{Snapshot $z$-Anonymity} model. 
+
+Essentially, this adaptation applies the standard $z$-anonymity logic but restricts the temporal window to exactly one reporting interval ($\Delta t = 30$ minutes). Instead of maintaining a historical buffer for individual users, the algorithm evaluates the privacy of a tuple based solely on its frequency across the entire reporting population at a specific timestamp $t$. 
+
+This architectural choice is primarily motivated by security. Using continuous, overlapping sliding windows in a synchronous network creates a vulnerability to \textit{differencing attacks}. If an adversary compares the published aggregates of two overlapping time windows (e.g., 10:00--11:00 and 10:30--11:30), they could isolate the set differences to re-identify the unique user who changed their consumption. By using discrete snapshots, each timestamp is treated as an independent privacy event.
+
+Additionally, this snapshot model improves communication and bandwidth efficiency. In a traditional sliding window approach, tuples that initially fail the privacy check might be buffered and transmitted later when enough matches finally accumulate over several hours. This allows data to persist across multiple evaluation cycles, increasing the total volume of transmitted tuples. By restricting the check to a single 30-minute interval, the algorithm acts as a strict "one-in, one-out" filter. Each reading is evaluated exactly once and suppressed permanently if it fails the threshold, preventing redundant transmissions and minimizing the overall communication overhead in the network.
+
+
+The shift to a snapshot approach fundamentally alters the system's behavior compared to the original temporal $z$-anonymity. By restricting the searchable 'crowd' to a single moment in time rather than accumulating matches over several hours, it becomes statistically much harder to find $z$ identical high-precision values. Consequently, this adaptation is expected to yield a significantly higher baseline suppression rate than traditional historical implementations.
+ 
+
+% The original algorithm utilizes a sliding time window ($\Delta$t) to accumulate frequency counts from sporadic data streams. However, smart metering infrastructure operates in a synchronous manner, in which the entire population of devices reports consumption data at aligned intervals (e.g., every 30 minutes).
+% To address this, this thesis implements a Spatial (or Snapshot) z-Anonymity model. Instead of maintaining a historical buffer for individual users, the algorithm evaluates the privacy of a tuple based on the frequency of its value across the entire reporting population at a specific timestamp t.
+
+
+\subsection{Formal Definition}
+Let $P_t$ be the set of all tuples available to an evaluating entity (such as Gateway or the Central Entity) at timestamp $t$. A consumption value $v$ is eligible for publication if and only if it satisfies the $z$-anonymity threshold:
+\begin{equation}
+    Count(v, P_t) \geq z
+\end{equation}
+where $Count(v, P_t)$ represents the number of records in the set $P_t$ sharing the exact value $v$ at time $t$. 
+
+
+Based on the privacy guarantees defined by Jha et al. \cite{zanonDataStreams}, this implementation represents the $z$-anonymity requirement using a surplus publication mechanism. In a snapshot context, this ensures that the first $z-1$ occurrences of a value are treated as a privacy buffer. If the threshold is met, the number of tuples actually published for value $v$, denoted as $N_{pub}(v, t)$, is calculated as:
+\begin{equation}
+    N_{pub}(v, t) = Count(v, P_t) - (z - 1)
+\end{equation}
+If $Count(v, P_t) < z$, then $N_{pub}(v, t) = 0$. This logic ensures that even in the presence of an adversary with partial knowledge of $z-1$ individuals, the published data represents a "crowd" where no single individual's contribution can be definitively isolated.

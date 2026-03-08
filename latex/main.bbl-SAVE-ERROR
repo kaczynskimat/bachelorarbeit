@@ -1144,6 +1144,92 @@
       \verb https://api.semanticscholar.org/CorpusID:267716
       \endverb
     \endentry
+    \entry{DiscernibilityMetric}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=9288aa82b1ac9cde6c4cf0136f6acddf}{%
+           family={Bayardo},
+           familyi={B\bibinitperiod},
+           given={R.J.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4b876a40aac16cd3d6b0278b1154b9da}{%
+           family={Agrawal},
+           familyi={A\bibinitperiod},
+           given={Rakesh},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{fullhash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{fullhashraw}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{bibnamehash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{authorbibnamehash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{authornamehash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{authorfullhash}{4e7ed6e3dfade694bf6913dcfab55221}
+      \strng{authorfullhashraw}{4e7ed6e3dfade694bf6913dcfab55221}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{21st International Conference on Data Engineering (ICDE'05)}
+      \field{title}{Data privacy through optimal k-anonymization}
+      \field{year}{2005}
+      \field{pages}{217\bibrangedash 228}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/ICDE.2005.42
+      \endverb
+    \endentry
+    \entry{DataAnonymizationEvaluationMetrics}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=ae2078b561c192395ee664e9820b5c9d}{%
+           family={Ni},
+           familyi={N\bibinitperiod},
+           given={Chunchun},
+           giveni={C\bibinitperiod}}}%
+        {{hash=f03e6091609920be181b63ef2de2bcdb}{%
+           family={Cang},
+           familyi={C\bibinitperiod},
+           given={Li\bibnamedelima Shan},
+           giveni={L\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=9044b018212fb9fab20ed7e3758b037a}{%
+           family={Gope},
+           familyi={G\bibinitperiod},
+           given={Prosanta},
+           giveni={P\bibinitperiod}}}%
+        {{hash=17bc963124cf769e91b2731cdc1b1e94}{%
+           family={Min},
+           familyi={M\bibinitperiod},
+           given={Geyong},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{d216c71dc13143690e86a29b8dc46e6a}
+      \strng{fullhash}{61a3e46751de36ffaa8bf851802ed3f1}
+      \strng{fullhashraw}{61a3e46751de36ffaa8bf851802ed3f1}
+      \strng{bibnamehash}{61a3e46751de36ffaa8bf851802ed3f1}
+      \strng{authorbibnamehash}{61a3e46751de36ffaa8bf851802ed3f1}
+      \strng{authornamehash}{d216c71dc13143690e86a29b8dc46e6a}
+      \strng{authorfullhash}{61a3e46751de36ffaa8bf851802ed3f1}
+      \strng{authorfullhashraw}{61a3e46751de36ffaa8bf851802ed3f1}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0020-0255}
+      \field{journaltitle}{Information Sciences}
+      \field{title}{Data anonymization evaluation for big data and {IoT} environment}
+      \field{volume}{605}
+      \field{year}{2022}
+      \field{pages}{381\bibrangedash 392}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.ins.2022.05.040
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0020025522004662
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0020025522004662
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
