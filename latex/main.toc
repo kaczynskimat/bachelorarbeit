@@ -3,19 +3,19 @@
 \contentsline {section}{\numberline {2.1}The Smart Meters and IoT Architecture}{6}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Data Privacy Fundamentals}{7}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Formal Privacy Models}{8}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}k-Anonymity and Equivalence Classes}{8}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.1}$k$-Anonymity and Equivalence Classes}{8}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Differential Privacy}{9}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}z-Anonymity}{9}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.3}$z$-Anonymity}{9}{subsection.2.3.3}%
 \contentsline {section}{\numberline {2.4}Data Preprocessing Techniques for Privacy}{10}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Data Generalization}{10}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Temporal Aggregation}{11}{subsection.2.4.2}%
 \contentsline {subsection}{\numberline {2.4.3}Local Prefiltering (Suppression)}{12}{subsection.2.4.3}%
-\contentsline {chapter}{\numberline {3}Related work}{13}{chapter.3}%
+\contentsline {chapter}{\numberline {3}Related Work}{13}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Privacy-Preserving Algorithms for Data Streams}{13}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Architectural Solutions for Privacy in IoT}{14}{section.3.2}%
 \contentsline {chapter}{\numberline {4}System Model}{15}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Architectural Model}{15}{section.4.1}%
-\contentsline {section}{\numberline {4.2}The Privacy Model: Snapshot z-Anonymity}{16}{section.4.2}%
+\contentsline {section}{\numberline {4.2}The Privacy Model: Snapshot $z$-Anonymity}{16}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Adaptation for Synchronous Streams}{16}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Formal Definition}{17}{subsection.4.2.2}%
 \contentsline {chapter}{\numberline {5}Methodology}{18}{chapter.5}%
@@ -25,7 +25,7 @@
 \contentsline {section}{\numberline {5.2}Implementation of Experimental Scenarios}{19}{section.5.2}%
 \contentsline {subsection}{\numberline {5.2.1}Scenario A: Baseline (Cloud-Only)}{19}{subsection.5.2.1}%
 \contentsline {subsection}{\numberline {5.2.2}Scenario B: Data Generalization (Edge)}{20}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Scenario C: Temporal Aggregation (Edge)}{20}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.3}Scenario C: Temporal Aggregation (Edge)}{21}{subsection.5.2.3}%
 \contentsline {subsection}{\numberline {5.2.4}Scenario D: Local Prefiltering (Fog)}{21}{subsection.5.2.4}%
 \contentsline {section}{\numberline {5.3}Evaluation Metrics}{22}{section.5.3}%
 \contentsline {subsection}{\numberline {5.3.1}Publication Ratio}{22}{subsection.5.3.1}%
@@ -35,6 +35,13 @@
 \contentsline {section}{\numberline {6.1}Analysis of Input Data Distribution}{25}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Baseline Performance (Cloud-Only)}{29}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Impact of Data Generalization}{30}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Impact of Temporal Aggregation (Edge)}{33}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Impact of Local Prefiltering}{35}{section.6.5}%
+\contentsline {section}{\numberline {6.4}Impact of Temporal Aggregation (Edge)}{32}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Impact of Local Prefiltering}{34}{section.6.5}%
 \contentsline {chapter}{\numberline {7}Discussion}{38}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Privacy Challenges in High-Frequency Consumption Patterns}{38}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Evaluation of Information Loss Metrics for Skewed Data}{39}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Impact of Temporal Aggregation on Bandwidth and Anonymity}{39}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Impact of Local Suppression on Global Data Availability}{40}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Limitations of the Evaluation}{40}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Future Work}{41}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Conclusion}{43}{chapter.8}%

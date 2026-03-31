@@ -50,8 +50,8 @@
       \strng{namehash}{3f4bde1abd8aa0642fd0e8b2a9f07e83}
       \strng{fullhash}{e7d55997e6b39026d7a3bcbb6f9b6cea}
       \strng{fullhashraw}{e7d55997e6b39026d7a3bcbb6f9b6cea}
-      \strng{bibnamehash}{e7d55997e6b39026d7a3bcbb6f9b6cea}
-      \strng{authorbibnamehash}{e7d55997e6b39026d7a3bcbb6f9b6cea}
+      \strng{bibnamehash}{3f4bde1abd8aa0642fd0e8b2a9f07e83}
+      \strng{authorbibnamehash}{3f4bde1abd8aa0642fd0e8b2a9f07e83}
       \strng{authornamehash}{3f4bde1abd8aa0642fd0e8b2a9f07e83}
       \strng{authorfullhash}{e7d55997e6b39026d7a3bcbb6f9b6cea}
       \strng{authorfullhashraw}{e7d55997e6b39026d7a3bcbb6f9b6cea}
@@ -101,8 +101,8 @@
       \strng{namehash}{2cca22237189919d172aab3509e8c8cc}
       \strng{fullhash}{cdbbb87846b563b27b62622754e10e37}
       \strng{fullhashraw}{cdbbb87846b563b27b62622754e10e37}
-      \strng{bibnamehash}{cdbbb87846b563b27b62622754e10e37}
-      \strng{authorbibnamehash}{cdbbb87846b563b27b62622754e10e37}
+      \strng{bibnamehash}{2cca22237189919d172aab3509e8c8cc}
+      \strng{authorbibnamehash}{2cca22237189919d172aab3509e8c8cc}
       \strng{authornamehash}{2cca22237189919d172aab3509e8c8cc}
       \strng{authorfullhash}{cdbbb87846b563b27b62622754e10e37}
       \strng{authorfullhashraw}{cdbbb87846b563b27b62622754e10e37}
@@ -229,8 +229,8 @@
       \strng{namehash}{e304239fb5a7de6e9058f4feaccfd8ae}
       \strng{fullhash}{93f3503fcc6a17b3c08e8979e1da6b35}
       \strng{fullhashraw}{93f3503fcc6a17b3c08e8979e1da6b35}
-      \strng{bibnamehash}{93f3503fcc6a17b3c08e8979e1da6b35}
-      \strng{authorbibnamehash}{93f3503fcc6a17b3c08e8979e1da6b35}
+      \strng{bibnamehash}{e304239fb5a7de6e9058f4feaccfd8ae}
+      \strng{authorbibnamehash}{e304239fb5a7de6e9058f4feaccfd8ae}
       \strng{authornamehash}{e304239fb5a7de6e9058f4feaccfd8ae}
       \strng{authorfullhash}{93f3503fcc6a17b3c08e8979e1da6b35}
       \strng{authorfullhashraw}{93f3503fcc6a17b3c08e8979e1da6b35}
@@ -273,12 +273,12 @@
            given={Stephen\bibnamedelima B.},
            giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
       }
-      \strng{namehash}{c4962aaed11c31af3b7679476c57393d}
+      \strng{namehash}{bcbd43278c1b44b44827857fb15edab6}
       \strng{fullhash}{bcbd43278c1b44b44827857fb15edab6}
       \strng{fullhashraw}{bcbd43278c1b44b44827857fb15edab6}
       \strng{bibnamehash}{bcbd43278c1b44b44827857fb15edab6}
       \strng{authorbibnamehash}{bcbd43278c1b44b44827857fb15edab6}
-      \strng{authornamehash}{c4962aaed11c31af3b7679476c57393d}
+      \strng{authornamehash}{bcbd43278c1b44b44827857fb15edab6}
       \strng{authorfullhash}{bcbd43278c1b44b44827857fb15edab6}
       \strng{authorfullhashraw}{bcbd43278c1b44b44827857fb15edab6}
       \field{sortinit}{6}
@@ -296,6 +296,52 @@
       \verb 10.1109/MSP.2010.40
       \endverb
     \endentry
+    \entry{AshgarSurveyPaper}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=2e5388472631bbacf97cf3e495d6dddc}{%
+           family={Asghar},
+           familyi={A\bibinitperiod},
+           given={Muhammad\bibnamedelima Rizwan},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=2a05c1360c304821264d8a73a81187c2}{%
+           family={Dan},
+           familyi={D\bibinitperiod},
+           given={Gyorgy},
+           giveni={G\bibinitperiod}}}%
+        {{hash=659e18d34186f9b9c53d72f16e07435e}{%
+           family={Miorandi},
+           familyi={M\bibinitperiod},
+           given={Daniele},
+           giveni={D\bibinitperiod}}}%
+        {{hash=9d27663ff3d1d36fb9a1965595656e6b}{%
+           family={Chlamtac},
+           familyi={C\bibinitperiod},
+           given={Imrich},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{c68ae7ef51b65bfa82d398b89b4cfcdd}
+      \strng{fullhash}{13b59db408bbc253bd875e006e8403fd}
+      \strng{fullhashraw}{13b59db408bbc253bd875e006e8403fd}
+      \strng{bibnamehash}{c68ae7ef51b65bfa82d398b89b4cfcdd}
+      \strng{authorbibnamehash}{c68ae7ef51b65bfa82d398b89b4cfcdd}
+      \strng{authornamehash}{c68ae7ef51b65bfa82d398b89b4cfcdd}
+      \strng{authorfullhash}{13b59db408bbc253bd875e006e8403fd}
+      \strng{authorfullhashraw}{13b59db408bbc253bd875e006e8403fd}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Communications Surveys \& Tutorials}
+      \field{month}{06}
+      \field{title}{Smart Meter Data Privacy: A Survey}
+      \field{volume}{PP}
+      \field{year}{2017}
+      \field{pages}{1\bibrangedash 1}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1109/COMST.2017.2720195
+      \endverb
+    \endentry
     \entry{GDPR}{misc}{}{}
       \field{sortinit}{7}
       \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
@@ -311,6 +357,40 @@
       \endverb
       \verb{url}
       \verb http://data.europa.eu/eli/reg/2016/679/oj
+      \endverb
+    \endentry
+    \entry{Sweeney_SimpleDemographics}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=4b70cbf7a64d719bc32e412248e3ff64}{%
+           family={Sweeney},
+           familyi={S\bibinitperiod},
+           given={Latanya},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{fullhash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{fullhashraw}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{bibnamehash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{authorbibnamehash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{authornamehash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{authorfullhash}{4b70cbf7a64d719bc32e412248e3ff64}
+      \strng{authorfullhashraw}{4b70cbf7a64d719bc32e412248e3ff64}
+      \field{extraname}{1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{6}
+      \field{title}{{Simple {D}emographics {O}ften {I}dentify {P}eople {U}niquely}}
+      \field{year}{2018}
+      \verb{doi}
+      \verb 10.1184/R1/6625769.v1
+      \endverb
+      \verb{urlraw}
+      \verb https://kilthub.cmu.edu/articles/journal_contribution/Simple_Demographics_Often_Identify_People_Uniquely/6625769
+      \endverb
+      \verb{url}
+      \verb https://kilthub.cmu.edu/articles/journal_contribution/Simple_Demographics_Often_Identify_People_Uniquely/6625769
       \endverb
     \endentry
     \entry{NetflixPaper}{inproceedings}{}{}
@@ -334,8 +414,8 @@
       \strng{authornamehash}{fdb313773cc7bea2d723b5efc4c92af9}
       \strng{authorfullhash}{fdb313773cc7bea2d723b5efc4c92af9}
       \strng{authorfullhashraw}{fdb313773cc7bea2d723b5efc4c92af9}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{booktitle}{2008 IEEE Symposium on Security and Privacy (sp 2008)}
@@ -370,9 +450,9 @@
       \strng{authornamehash}{4b70cbf7a64d719bc32e412248e3ff64}
       \strng{authorfullhash}{4b70cbf7a64d719bc32e412248e3ff64}
       \strng{authorfullhashraw}{4b70cbf7a64d719bc32e412248e3ff64}
-      \field{extraname}{1}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{0218-4885}
@@ -426,8 +506,8 @@
       \strng{namehash}{9e4566fa5b3d5b77ac7af6e4ac843e11}
       \strng{fullhash}{03331a172a3c8221e6386ada85cc2ec5}
       \strng{fullhashraw}{03331a172a3c8221e6386ada85cc2ec5}
-      \strng{bibnamehash}{03331a172a3c8221e6386ada85cc2ec5}
-      \strng{authorbibnamehash}{03331a172a3c8221e6386ada85cc2ec5}
+      \strng{bibnamehash}{9e4566fa5b3d5b77ac7af6e4ac843e11}
+      \strng{authorbibnamehash}{9e4566fa5b3d5b77ac7af6e4ac843e11}
       \strng{authornamehash}{9e4566fa5b3d5b77ac7af6e4ac843e11}
       \strng{authorfullhash}{03331a172a3c8221e6386ada85cc2ec5}
       \strng{authorfullhashraw}{03331a172a3c8221e6386ada85cc2ec5}
@@ -445,27 +525,36 @@
       \endverb
     \endentry
     \entry{dezent2025}{article}{}{}
-      \name{author}{1}{}{%
+      \name{author}{2}{}{%
         {{hash=e1f920aeec40d197d48819d5b1a8abd3}{%
            family={Brunn},
            familyi={B\bibinitperiod},
            given={Carolin},
            giveni={C\bibinitperiod}}}%
+        {{hash=fbd922a6d865ddfc3e2b420bd945a4c8}{%
+           family={Tschorsch},
+           familyi={T\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
       }
-      \strng{namehash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{fullhash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{fullhashraw}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{bibnamehash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{authorbibnamehash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{authornamehash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{authorfullhash}{e1f920aeec40d197d48819d5b1a8abd3}
-      \strng{authorfullhashraw}{e1f920aeec40d197d48819d5b1a8abd3}
+      \strng{namehash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{fullhash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{fullhashraw}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{bibnamehash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{authorbibnamehash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{authornamehash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{authorfullhash}{962d1aebef6aef5a045fe81111f6ba7f}
+      \strng{authorfullhashraw}{962d1aebef6aef5a045fe81111f6ba7f}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{month}{03}
       \field{title}{deZent: {D}ecentralized z-{A}nonymity with {P}rivacy-{P}reserving {C}oordination}
-      \field{year}{2025}
+      \field{year}{2026}
+      \verb{doi}
+      \verb 10.48550/arXiv.2603.08854
+      \endverb
     \endentry
     \entry{londonSmartMeter2014}{misc}{}{}
       \name{author}{1}{}{%
@@ -528,8 +617,8 @@
       \strng{namehash}{b13d56fe65b8052396f26390274b4978}
       \strng{fullhash}{9eda1f9615db9420697f36712b056545}
       \strng{fullhashraw}{9eda1f9615db9420697f36712b056545}
-      \strng{bibnamehash}{9eda1f9615db9420697f36712b056545}
-      \strng{authorbibnamehash}{9eda1f9615db9420697f36712b056545}
+      \strng{bibnamehash}{b13d56fe65b8052396f26390274b4978}
+      \strng{authorbibnamehash}{b13d56fe65b8052396f26390274b4978}
       \strng{authornamehash}{b13d56fe65b8052396f26390274b4978}
       \strng{authorfullhash}{9eda1f9615db9420697f36712b056545}
       \strng{authorfullhashraw}{9eda1f9615db9420697f36712b056545}
@@ -573,12 +662,12 @@
       \list{publisher}{1}{%
         {Association for Computing Machinery}%
       }
-      \strng{namehash}{76dbacedc772eb153a49a9028078e6aa}
+      \strng{namehash}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{fullhash}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{fullhashraw}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{bibnamehash}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{authorbibnamehash}{11e6a19c7752782846f0fdcfaeaf70ce}
-      \strng{authornamehash}{76dbacedc772eb153a49a9028078e6aa}
+      \strng{authornamehash}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{authorfullhash}{11e6a19c7752782846f0fdcfaeaf70ce}
       \strng{authorfullhashraw}{11e6a19c7752782846f0fdcfaeaf70ce}
       \field{sortinit}{1}
@@ -628,53 +717,19 @@
       \strng{namehash}{6541692f984296e193a15983ec1da8ed}
       \strng{fullhash}{be24dbef62e6aa66d2f39e57d2d90641}
       \strng{fullhashraw}{be24dbef62e6aa66d2f39e57d2d90641}
-      \strng{bibnamehash}{be24dbef62e6aa66d2f39e57d2d90641}
-      \strng{authorbibnamehash}{be24dbef62e6aa66d2f39e57d2d90641}
+      \strng{bibnamehash}{6541692f984296e193a15983ec1da8ed}
+      \strng{authorbibnamehash}{6541692f984296e193a15983ec1da8ed}
       \strng{authornamehash}{6541692f984296e193a15983ec1da8ed}
       \strng{authorfullhash}{be24dbef62e6aa66d2f39e57d2d90641}
       \strng{authorfullhashraw}{be24dbef62e6aa66d2f39e57d2d90641}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Nature Communications}
       \field{note}{Explicitly discusses the memory/computation constraints of current smart meter hardware}
       \field{title}{Introducing {E}dge {I}ntelligence to {S}mart {M}eters via {F}ederated {S}plit {L}earning}
       \field{year}{2024}
-    \endentry
-    \entry{Sweeney_SimpleDemographics}{article}{}{}
-      \name{author}{1}{}{%
-        {{hash=4b70cbf7a64d719bc32e412248e3ff64}{%
-           family={Sweeney},
-           familyi={S\bibinitperiod},
-           given={Latanya},
-           giveni={L\bibinitperiod}}}%
-      }
-      \strng{namehash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{fullhash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{fullhashraw}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{bibnamehash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{authorbibnamehash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{authornamehash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{authorfullhash}{4b70cbf7a64d719bc32e412248e3ff64}
-      \strng{authorfullhashraw}{4b70cbf7a64d719bc32e412248e3ff64}
-      \field{extraname}{2}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{month}{6}
-      \field{title}{{Simple {D}emographics {O}ften {I}dentify {P}eople {U}niquely}}
-      \field{year}{2018}
-      \verb{doi}
-      \verb 10.1184/R1/6625769.v1
-      \endverb
-      \verb{urlraw}
-      \verb https://kilthub.cmu.edu/articles/journal_contribution/Simple_Demographics_Often_Identify_People_Uniquely/6625769
-      \endverb
-      \verb{url}
-      \verb https://kilthub.cmu.edu/articles/journal_contribution/Simple_Demographics_Often_Identify_People_Uniquely/6625769
-      \endverb
     \endentry
     \entry{AnonymizationDataStreams}{article}{}{}
       \name{author}{2}{}{%
@@ -745,8 +800,8 @@
       \strng{authornamehash}{4d8bf63261aefa96e8725c0b5785f3b3}
       \strng{authorfullhash}{4d8bf63261aefa96e8725c0b5785f3b3}
       \strng{authorfullhashraw}{4d8bf63261aefa96e8725c0b5785f3b3}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{1551-305X}
@@ -792,12 +847,12 @@
       \list{publisher}{1}{%
         {IEEE Computer Society}%
       }
-      \strng{namehash}{1ce042f35dc5709c3bf767a54d7ce971}
+      \strng{namehash}{12ab38d35315ee826f070954d529cf83}
       \strng{fullhash}{12ab38d35315ee826f070954d529cf83}
       \strng{fullhashraw}{12ab38d35315ee826f070954d529cf83}
       \strng{bibnamehash}{12ab38d35315ee826f070954d529cf83}
       \strng{authorbibnamehash}{12ab38d35315ee826f070954d529cf83}
-      \strng{authornamehash}{1ce042f35dc5709c3bf767a54d7ce971}
+      \strng{authornamehash}{12ab38d35315ee826f070954d529cf83}
       \strng{authorfullhash}{12ab38d35315ee826f070954d529cf83}
       \strng{authorfullhashraw}{12ab38d35315ee826f070954d529cf83}
       \field{sortinit}{4}
@@ -857,8 +912,8 @@
       \strng{namehash}{2bf32efbb31863d5373396bdb3a98a53}
       \strng{fullhash}{8d4d2633cb8f5f15bc8461131d780522}
       \strng{fullhashraw}{8d4d2633cb8f5f15bc8461131d780522}
-      \strng{bibnamehash}{8d4d2633cb8f5f15bc8461131d780522}
-      \strng{authorbibnamehash}{8d4d2633cb8f5f15bc8461131d780522}
+      \strng{bibnamehash}{2bf32efbb31863d5373396bdb3a98a53}
+      \strng{authorbibnamehash}{2bf32efbb31863d5373396bdb3a98a53}
       \strng{authornamehash}{2bf32efbb31863d5373396bdb3a98a53}
       \strng{authorfullhash}{8d4d2633cb8f5f15bc8461131d780522}
       \strng{authorfullhashraw}{8d4d2633cb8f5f15bc8461131d780522}
@@ -897,12 +952,12 @@
            given={R.},
            giveni={R\bibinitperiod}}}%
       }
-      \strng{namehash}{4b002bf9541b21a00a8c654118f15511}
+      \strng{namehash}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{fullhash}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{fullhashraw}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{bibnamehash}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{authorbibnamehash}{d878ffc8a0b937afeb48e0a3b83707db}
-      \strng{authornamehash}{4b002bf9541b21a00a8c654118f15511}
+      \strng{authornamehash}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{authorfullhash}{d878ffc8a0b937afeb48e0a3b83707db}
       \strng{authorfullhashraw}{d878ffc8a0b937afeb48e0a3b83707db}
       \field{sortinit}{5}
@@ -1047,8 +1102,8 @@
       \strng{namehash}{70b0b6347dfd026f5c2c0cac2cf743e7}
       \strng{fullhash}{47d1d855762c62eaea1c70f1f9b5a2ef}
       \strng{fullhashraw}{47d1d855762c62eaea1c70f1f9b5a2ef}
-      \strng{bibnamehash}{47d1d855762c62eaea1c70f1f9b5a2ef}
-      \strng{authorbibnamehash}{47d1d855762c62eaea1c70f1f9b5a2ef}
+      \strng{bibnamehash}{70b0b6347dfd026f5c2c0cac2cf743e7}
+      \strng{authorbibnamehash}{70b0b6347dfd026f5c2c0cac2cf743e7}
       \strng{authornamehash}{70b0b6347dfd026f5c2c0cac2cf743e7}
       \strng{authorfullhash}{47d1d855762c62eaea1c70f1f9b5a2ef}
       \strng{authorfullhashraw}{47d1d855762c62eaea1c70f1f9b5a2ef}
@@ -1142,6 +1197,144 @@
       \endverb
       \verb{url}
       \verb https://api.semanticscholar.org/CorpusID:267716
+      \endverb
+    \endentry
+    \entry{DataVariability}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=206087de2612c5954d2b8490a4306445}{%
+           family={Anvari},
+           familyi={A\bibinitperiod},
+           given={Mehrnaz},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ff194d3f20f92c915fb7cb1218411746}{%
+           family={Proedrou},
+           familyi={P\bibinitperiod},
+           given={Beth},
+           giveni={B\bibinitperiod}}}%
+        {{hash=0ad70260b413c18a75ff650ee6dd5198}{%
+           family={Schäfer},
+           familyi={S\bibinitperiod},
+           given={Benjamin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=53a777055b139b74439193de18ada60c}{%
+           family={Beck},
+           familyi={B\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod}}}%
+        {{hash=127aad58be2d66e178793eb55e69b551}{%
+           family={Kantz},
+           familyi={K\bibinitperiod},
+           given={Holger},
+           giveni={H\bibinitperiod}}}%
+        {{hash=63afed2aaea16ab8c8a23ddadcfd84b8}{%
+           family={Timme},
+           familyi={T\bibinitperiod},
+           given={Marc},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{e89b3aa6ac3a60c1472c4806167f21c2}
+      \strng{fullhash}{409ce97ef224069557bc475a0cefaac6}
+      \strng{fullhashraw}{409ce97ef224069557bc475a0cefaac6}
+      \strng{bibnamehash}{e89b3aa6ac3a60c1472c4806167f21c2}
+      \strng{authorbibnamehash}{e89b3aa6ac3a60c1472c4806167f21c2}
+      \strng{authornamehash}{e89b3aa6ac3a60c1472c4806167f21c2}
+      \strng{authorfullhash}{409ce97ef224069557bc475a0cefaac6}
+      \strng{authorfullhashraw}{409ce97ef224069557bc475a0cefaac6}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Communications}
+      \field{month}{08}
+      \field{title}{Data-driven load profiles and the dynamics of residential electricity consumption}
+      \field{volume}{13}
+      \field{year}{2022}
+      \field{pages}{4593}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/s41467-022-31942-9
+      \endverb
+    \endentry
+    \entry{NewConsumptionLoads}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=1975e1db9135584a0d4ed298cedd6e52}{%
+           family={Meiers},
+           familyi={M\bibinitperiod},
+           given={Josef},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9bdd798b23dbea852cc9afa975519a2c}{%
+           family={Frey},
+           familyi={F\bibinitperiod},
+           given={Georg},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{aed811e9670cec1c919f178891035eeb}
+      \strng{fullhash}{aed811e9670cec1c919f178891035eeb}
+      \strng{fullhashraw}{aed811e9670cec1c919f178891035eeb}
+      \strng{bibnamehash}{aed811e9670cec1c919f178891035eeb}
+      \strng{authorbibnamehash}{aed811e9670cec1c919f178891035eeb}
+      \strng{authornamehash}{aed811e9670cec1c919f178891035eeb}
+      \strng{authorfullhash}{aed811e9670cec1c919f178891035eeb}
+      \strng{authorfullhashraw}{aed811e9670cec1c919f178891035eeb}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1996-1073}
+      \field{journaltitle}{Energies}
+      \field{number}{1}
+      \field{title}{A Case Study of the Use of Smart EV Charging for Peak Shaving in Local Area Grids}
+      \field{volume}{17}
+      \field{year}{2024}
+      \verb{doi}
+      \verb 10.3390/en17010047
+      \endverb
+    \endentry
+    \entry{NILM}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=dc419adf7a3a71cbdf07c1c858d715e2}{%
+           family={Zoha},
+           familyi={Z\bibinitperiod},
+           given={Ahmed},
+           giveni={A\bibinitperiod}}}%
+        {{hash=0fa7519488cff4343ad27e26a08145d6}{%
+           family={Gluhak},
+           familyi={G\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f2769d972335f7e4b819e5f58619b9c5}{%
+           family={Imran},
+           familyi={I\bibinitperiod},
+           given={Muhammad\bibnamedelima Ali},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=84bf0b62c69aee76a2a7fdbcbef37ecf}{%
+           family={Rajasegarar},
+           familyi={R\bibinitperiod},
+           given={Sutharshan},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{33158a9dc845cb3353bb2b5bdac4e6d2}
+      \strng{fullhash}{8d336cb5ad0ed745d031b10edd4944ae}
+      \strng{fullhashraw}{8d336cb5ad0ed745d031b10edd4944ae}
+      \strng{bibnamehash}{33158a9dc845cb3353bb2b5bdac4e6d2}
+      \strng{authorbibnamehash}{33158a9dc845cb3353bb2b5bdac4e6d2}
+      \strng{authornamehash}{33158a9dc845cb3353bb2b5bdac4e6d2}
+      \strng{authorfullhash}{8d336cb5ad0ed745d031b10edd4944ae}
+      \strng{authorfullhashraw}{8d336cb5ad0ed745d031b10edd4944ae}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1424-8220}
+      \field{journaltitle}{Sensors}
+      \field{number}{12}
+      \field{title}{Non-Intrusive Load Monitoring Approaches for Disaggregated Energy Sensing: A Survey}
+      \field{volume}{12}
+      \field{year}{2012}
+      \field{pages}{16838\bibrangedash 16866}
+      \range{pages}{29}
+      \verb{doi}
+      \verb 10.3390/s121216838
       \endverb
     \endentry
   \enddatalist

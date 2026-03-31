@@ -1,6 +1,7 @@
 \begin{abstract}
-This thesis investigates the impact of preprocessing steps on the effectiveness of
-z-anonymity in multi-layered IoT architectures.
-(To be continued)
+This thesis evaluates the impact of data preprocessing on the performance of $z$-anonymity in multi-layered Internet of Things architectures. High-frequency energy consumption data is used for grid management tasks, but its high resolution makes individual records mathematically unique. This uniqueness causes the $z$-anonymity algorithm to suppress a large portion of the data to satisfy privacy constraints. The anonymization is required to mitigate the risk of user re-identification and the subsequent exposure of private behavioral patterns.
 
+To address this issue, three preprocessing strategies (Data Generalization, Temporal Aggregation, and Local Prefiltering) are tested within a three-layer hierarchy consisting of Edge, Fog, and Central Entity layers. The experiments are conducted using a 1.8-million-record subset of the \textit{London Households} dataset, utilizing a Snapshot adaptation of the $z$-anonymity model.
+
+The results show that a centralized approach using raw data is not feasible, as it leads to near-total data suppression at high privacy thresholds. However, shifting preprocessing tasks to the Edge and Fog layers successfully mitigates this issue. Specifically, generalizing data by reducing its numerical precision at the Edge significantly improves the publication ratio, ensuring high data availability even under strict privacy constraints. In contrast, while temporal aggregation drastically reduces transmission volume and conserves network bandwidth, it fails to improve data availability due to the generation of unique arithmetic means. Furthermore, the introduction of a refined metric, the \textit{Effective NCP}, reveals that standard \textit{Normalized Certainty Penalty} can be highly misleading in skewed datasets containing extreme outliers. Overall, the findings demonstrate that distributed preprocessing is a fundamental requirement for the practical implementation of $z$-anonymity in smart grid environments.
 \end{abstract}

@@ -96,15 +96,15 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>6</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
-      <bcf:value>2</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>6</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -331,15 +331,15 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>6</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
-      <bcf:value>2</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>6</bcf:value>
+      <bcf:value>3</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -644,7 +644,7 @@
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
     <bcf:option datatype="boolean">subentry</bcf:option>
-    <bcf:option datatype="boolean">dashed</bcf:option>
+    <bcf:option datatype="boolean">subentrycomp</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer">mincrossrefs</bcf:option>
     <bcf:option datatype="integer">minxrefs</bcf:option>
@@ -727,6 +727,7 @@
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
     <bcf:option datatype="boolean">subentry</bcf:option>
+    <bcf:option datatype="boolean">subentrycomp</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="xml">labelalphatemplate</bcf:option>
     <bcf:option datatype="xml">translit</bcf:option>
@@ -816,6 +817,7 @@
     <bcf:option datatype="boolean" backendout="1">eprint</bcf:option>
     <bcf:option datatype="boolean" backendout="1">related</bcf:option>
     <bcf:option datatype="boolean" backendout="1">subentry</bcf:option>
+    <bcf:option datatype="boolean" backendout="1">subentrycomp</bcf:option>
     <bcf:option datatype="boolean" backendout="1">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer" backendin="maxcitenames,maxbibnames,maxsortnames">maxnames</bcf:option>
     <bcf:option datatype="integer" backendin="mincitenames,minbibnames,minsortnames">minnames</bcf:option>
@@ -2380,46 +2382,47 @@
     <bcf:citekey order="4" intorder="1">DemandResponseBenefits</bcf:citekey>
     <bcf:citekey order="5" intorder="1">RevealingHouseholdCharacteristicsSM</bcf:citekey>
     <bcf:citekey order="6" intorder="1">InferringPersonalInformationFromDRS</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">AshgarSurveyPaper</bcf:citekey>
     <bcf:citekey order="7" intorder="1">GDPR</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">NetflixPaper</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">Sweeney_kanon</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">zanonDataStreams</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">dezent2025</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">Sweeney_SimpleDemographics</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">NetflixPaper</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">Sweeney_kanon</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">zanonDataStreams</bcf:citekey>
     <bcf:citekey order="12" intorder="1">reviewIoT</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">londonSmartMeter2014</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">SmartMetersApplications</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">DemandResponseSurvey</bcf:citekey>
-    <bcf:citekey order="15" intorder="2">DemandResponseBenefits</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">RevealingHouseholdCharacteristicsSM</bcf:citekey>
-    <bcf:citekey order="16" intorder="2">InferringPersonalInformationFromDRS</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">reviewIoT</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">edgecomputing</bcf:citekey>
-    <bcf:citekey order="18" intorder="2">fogcomputing</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">EdgeIntelligenceSmartMeters</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">edgecomputing</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">dezent2025</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">edgecomputing</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">fogcomputing</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">SmartMetersApplications</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">InferringPersonalInformationFromDRS</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">dezent2025</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">londonSmartMeter2014</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">SmartMetersApplications</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">DemandResponseSurvey</bcf:citekey>
+    <bcf:citekey order="16" intorder="2">DemandResponseBenefits</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">RevealingHouseholdCharacteristicsSM</bcf:citekey>
+    <bcf:citekey order="17" intorder="2">InferringPersonalInformationFromDRS</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">reviewIoT</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">edgecomputing</bcf:citekey>
+    <bcf:citekey order="19" intorder="2">fogcomputing</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">EdgeIntelligenceSmartMeters</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">edgecomputing</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">dezent2025</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">edgecomputing</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">fogcomputing</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">SmartMetersApplications</bcf:citekey>
     <bcf:citekey order="26" intorder="1">InferringPersonalInformationFromDRS</bcf:citekey>
-    <bcf:citekey order="27" intorder="1">Sweeney_kanon</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">InferringPersonalInformationFromDRS</bcf:citekey>
     <bcf:citekey order="28" intorder="1">Sweeney_kanon</bcf:citekey>
     <bcf:citekey order="29" intorder="1">Sweeney_kanon</bcf:citekey>
-    <bcf:citekey order="30" intorder="1">Sweeney_SimpleDemographics</bcf:citekey>
-    <bcf:citekey order="31" intorder="1">NetflixPaper</bcf:citekey>
-    <bcf:citekey order="32" intorder="1">RevealingHouseholdCharacteristicsSM</bcf:citekey>
-    <bcf:citekey order="33" intorder="1">Sweeney_kanon</bcf:citekey>
+    <bcf:citekey order="30" intorder="1">Sweeney_kanon</bcf:citekey>
+    <bcf:citekey order="31" intorder="1">Sweeney_SimpleDemographics</bcf:citekey>
+    <bcf:citekey order="32" intorder="1">NetflixPaper</bcf:citekey>
+    <bcf:citekey order="33" intorder="1">RevealingHouseholdCharacteristicsSM</bcf:citekey>
     <bcf:citekey order="34" intorder="1">Sweeney_kanon</bcf:citekey>
     <bcf:citekey order="35" intorder="1">Sweeney_kanon</bcf:citekey>
-    <bcf:citekey order="36" intorder="1">AnonymizationDataStreams</bcf:citekey>
-    <bcf:citekey order="37" intorder="1">zanonDataStreams</bcf:citekey>
-    <bcf:citekey order="38" intorder="1">AnonymizationDataStreams</bcf:citekey>
-    <bcf:citekey order="39" intorder="1">DifferentialPrivacy</bcf:citekey>
+    <bcf:citekey order="36" intorder="1">Sweeney_kanon</bcf:citekey>
+    <bcf:citekey order="37" intorder="1">AnonymizationDataStreams</bcf:citekey>
+    <bcf:citekey order="38" intorder="1">zanonDataStreams</bcf:citekey>
+    <bcf:citekey order="39" intorder="1">AnonymizationDataStreams</bcf:citekey>
     <bcf:citekey order="40" intorder="1">DifferentialPrivacy</bcf:citekey>
-    <bcf:citekey order="41" intorder="1">DemandResponseSurvey</bcf:citekey>
-    <bcf:citekey order="42" intorder="1">DifferentialPrivacy</bcf:citekey>
-    <bcf:citekey order="43" intorder="1">zanonDataStreams</bcf:citekey>
+    <bcf:citekey order="41" intorder="1">DifferentialPrivacy</bcf:citekey>
+    <bcf:citekey order="42" intorder="1">DemandResponseSurvey</bcf:citekey>
+    <bcf:citekey order="43" intorder="1">DifferentialPrivacy</bcf:citekey>
     <bcf:citekey order="44" intorder="1">zanonDataStreams</bcf:citekey>
     <bcf:citekey order="45" intorder="1">zanonDataStreams</bcf:citekey>
     <bcf:citekey order="46" intorder="1">zanonDataStreams</bcf:citekey>
@@ -2455,6 +2458,10 @@
     <bcf:citekey order="76" intorder="1">zanonDataStreams</bcf:citekey>
     <bcf:citekey order="77" intorder="1">UtilityBasedAnonymizationNCP</bcf:citekey>
     <bcf:citekey order="78" intorder="1">UtilityBasedAnonymizationNCP</bcf:citekey>
+    <bcf:citekey order="79" intorder="1">UtilityBasedAnonymizationNCP</bcf:citekey>
+    <bcf:citekey order="80" intorder="1">DataVariability</bcf:citekey>
+    <bcf:citekey order="81" intorder="1">NewConsumptionLoads</bcf:citekey>
+    <bcf:citekey order="82" intorder="1">NILM</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

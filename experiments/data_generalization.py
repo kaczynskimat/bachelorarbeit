@@ -1,6 +1,7 @@
 import pandas as pd
 from collections import Counter
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class GeneralizationExperiment:
@@ -23,7 +24,8 @@ class GeneralizationExperiment:
         return self.df.head(n)
     
     def _round_the_column(self, precision):
-        self.df['KWH/hh (per half hour) '] = self.df['KWH/hh (per half hour) '].round(precision)
+        multiplier = 10 ** precision
+        self.df['KWH/hh (per half hour) '] = np.floor(self.df['KWH/hh (per half hour) '] * multiplier + 0.5) / multiplier
     
     def _group_by_datetime(self):
         # Group by timestamp - it's faster than iterating row by row

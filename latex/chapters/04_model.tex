@@ -3,20 +3,20 @@ This chapter describes the technical setup and the privacy model used in this th
 
 \section{Architectural Model}
 \label{sec:system_model}
-Building on the architectural foundations discussed in Section~\ref{sec:architecturalfoundations}, the experimental environment is implemented as a three-tier hierarchical simulation consisting of the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This setup models the data flow from the individual household level to a centralized utility provider, allowing for the systematic placement of preprocessing steps at different logical layers.
+Building on the architectural foundations discussed in Section~\ref{sec:architecturalfoundations}, the experimental environment is implemented as a three-layer hierarchical simulation consisting of the \textbf{Edge} (Smart Meters), the \textbf{Fog} (Gateways), and the \textbf{Central Entity} (Cloud). This setup models the data flow from the individual household level to a centralized utility provider, allowing for the systematic placement of preprocessing steps at different logical layers.
 
-The simulation utilizes 5,529 independent Edge nodes, each representing a unique smart meter identified by its \texttt{LCLid}. These nodes are logically partitioned into 56 distinct neighborhoods to represent a distributed network topology. To maintain a near-uniform distribution across the simulation, 55 of these neighborhoods consist of exactly 100 smart meters, while the final neighborhood manages the remaining 29 devices. Each neighborhood reports to an intermediate Fog node (Gateway), which serves as an active processing point in Local Prefiltering scenario or a passive relay in all other cases. The final destination for all processed streams is the Central Entity (Cloud), which performs the snapshot $z$-anonymity of all data received from gateways.
+The simulation utilizes 5,529 independent Edge nodes, each representing a unique smart meter identified by its \texttt{LCLid}. These nodes are logically partitioned into 56 distinct neighborhoods to represent a distributed network topology. To maintain a near-uniform distribution across the simulation, 55 of these neighborhoods consist of exactly 100 smart meters, while the final neighborhood manages the remaining 29 devices. Each neighborhood reports to an intermediate Fog node (Gateway), which serves as an active processing point in the Local Prefiltering scenario or a passive relay in all other cases. The final destination for all processed streams is the Central Entity (Cloud), which performs the snapshot $z$-anonymity of all data received from gateways.
 
 For the purposes of this research, we adopt an \textbf{idealized device-level trust model}. In this framework, both the Edge nodes (Smart Meters) and the Fog nodes (Gateways) are assumed to be secure and trusted hardware environments. This assumption is based on the premise that these devices are produced by external vendors according to industry security standards and operate within the local infrastructure of the power grid or the user's premises.
 
 
-Under this idealized setting, we assume that the data is protected from unauthorized access while residing on or being processed by the local hardware. Consequently, the \textit{Trust Boundary} is located at the egress point of the Fog layer. Data is treated as exposed to an "honest-but-curious" adversary only once it leaves the local network and enters the Central Entity's infrastructure. This model allows the thesis to focus on the effectiveness of preprocessing steps, such as rounding at the Edge or prefiltering at the Fog, in protecting user privacy against the central data collector, assuming the underlying local \ac{IoT} hardware remains uncompromised.
+Under this idealized setting, we assume that the data is protected from unauthorized access while residing on or being processed by the local hardware. Consequently, the \textit{Trust Boundary} is located at the exit point of the Fog Layer. Data is treated as exposed to an "honest-but-curious" adversary only once it leaves the local network and enters the Central Entity's infrastructure. This model allows the thesis to focus on the effectiveness of preprocessing steps, such as rounding at the Edge or prefiltering at the Fog, in protecting user privacy against the central data collector, assuming the underlying local \ac{IoT} hardware remains uncompromised.
 
 
 
-\section{The Privacy Model: Snapshot z-Anonymity}
+\section{The Privacy Model: Snapshot \texorpdfstring{$z$}{z}-Anonymity}
 \label{sec:zanonsnapshot}
-The core privacy mechanism employed in this research is an adaptation of the z-anonymity algorithm proposed by Jha et al. \cite{zanonDataStreams}.
+The core privacy mechanism employed in this research is an adaptation of the $z$-anonymity algorithm described in Section~\ref{sec:FormalPrivacyModels} that was proposed by Jha et al.~\cite{zanonDataStreams}.
 
 \subsection{Adaptation for Synchronous Streams}
 
@@ -29,7 +29,7 @@ This architectural choice is primarily motivated by security. Using continuous, 
 Additionally, this snapshot model improves communication and bandwidth efficiency. In a traditional sliding window approach, tuples that initially fail the privacy check might be buffered and transmitted later when enough matches finally accumulate over several hours. This allows data to persist across multiple evaluation cycles, increasing the total volume of transmitted tuples. By restricting the check to a single 30-minute interval, the algorithm acts as a strict "one-in, one-out" filter. Each reading is evaluated exactly once and suppressed permanently if it fails the threshold, preventing redundant transmissions and minimizing the overall communication overhead in the network.
 
 
-The shift to a snapshot approach fundamentally alters the system's behavior compared to the original temporal $z$-anonymity. By restricting the searchable 'crowd' to a single moment in time rather than accumulating matches over several hours, it becomes statistically much harder to find $z$ identical high-precision values. Consequently, this adaptation is expected to yield a significantly higher baseline suppression rate than traditional historical implementations.
+The shift to a snapshot approach fundamentally alters the system's behavior compared to the original temporal $z$-anonymity. By restricting the searchable 'crowd' (the set of users at a given timestamp $t$) to a single moment in time rather than accumulating matches over several hours, it becomes statistically much harder to find $z$ identical high-precision values. Consequently, this adaptation is expected to yield a significantly higher baseline suppression rate than traditional historical implementations.
  
 
 % The original algorithm utilizes a sliding time window ($\Delta$t) to accumulate frequency counts from sporadic data streams. However, smart metering infrastructure operates in a synchronous manner, in which the entire population of devices reports consumption data at aligned intervals (e.g., every 30 minutes).
@@ -37,7 +37,7 @@ The shift to a snapshot approach fundamentally alters the system's behavior comp
 
 
 \subsection{Formal Definition}
-Let $P_t$ be the set of all tuples available to an evaluating entity (such as Gateway or the Central Entity) at timestamp $t$. A consumption value $v$ is eligible for publication if and only if it satisfies the $z$-anonymity threshold:
+Let $P_t$ be the set of all tuples available to an evaluating entity (such as gateway at Fog Layer or the Central Entity) at timestamp $t$. A consumption value $v$ is eligible for publication if and only if it satisfies the $z$-anonymity threshold:
 \begin{equation}
     Count(v, P_t) \geq z
 \end{equation}

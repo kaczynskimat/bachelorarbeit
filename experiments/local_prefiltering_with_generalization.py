@@ -1,4 +1,5 @@
 import pandas as pd 
+import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter, defaultdict
 
@@ -25,7 +26,9 @@ class LocalPrefilteringWithGeneralization:
     
     def round_energy_consumption(self):
         """A helper function to round the energy consumption in the dataset."""
-        self.df['KWH/hh (per half hour) '] = self.df['KWH/hh (per half hour) '].apply(lambda x: round(x, self.precision))
+        # self.df['KWH/hh (per half hour) '] = self.df['KWH/hh (per half hour) '].apply(lambda x: round(x, self.precision))
+        multiplier = 10 ** self.precision
+        self.df['KWH/hh (per half hour) '] = np.floor(self.df['KWH/hh (per half hour) '] * multiplier + 0.5) / multiplier
         
     def head(self, n=5):
         return self.df.head(n)
